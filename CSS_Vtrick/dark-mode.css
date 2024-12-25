@@ -44,3 +44,15 @@ html.is-dark li code {
     padding: 0.2em 0.4em;      /* 기존 padding 유지 */
     border-radius: 3px;        /* 기존 border-radius 유지 */
 }
+
+/* 모든 코드 블록 다크모드 스타일 */
+html.is-dark code {
+    background-color: #2a2a2a;
+    color: #dddddd;
+}
+
+/* pre 태그 내 코드 블록 다크모드 스타일 */
+html.is-dark pre code {
+    background-color: #2a2a2a;
+    color: #dddddd;
+}
