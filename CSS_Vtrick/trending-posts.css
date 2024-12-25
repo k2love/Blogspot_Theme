@@ -1,0 +1,91 @@
+/* 다크모드 스타일 */
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post {
+    background: linear-gradient(135deg, #2d2d2d 0, #353535 100%);
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post:nth-child(2) {
+    background-image: -webkit-linear-gradient(135deg, #2a2a2a 0, #303030 48%, #303030 49%, #353535 100%);
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post:nth-child(3) {
+    background: linear-gradient(33deg, #282828, #303030); 
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post:nth-child(4) {
+    background: linear-gradient(218deg, #252525 0, #303030 100%);
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post:nth-child(5) {
+    background: #252525;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .popular-post.post:nth-child(6) {
+    background: linear-gradient(-64deg, #202020 0, #303030 100%);
+}
+
+/* 다크모드 텍스트 스타일 */
+html.is-dark .trending .widget.PopularPosts .widget-content .entry-title a {
+    color: #d0d0d0;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .entry-meta {
+    color: #b0b0b0;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .entry-meta .author-name {
+    color: #bfbfbf;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .entry-meta.mi.tag {
+    color: #a8a8a8;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-content .entry-meta.mi.tag .entry-tag {
+    color: var(--accent);
+    opacity: 0.8;
+}
+
+/* 위젯 타이틀 스타일 */
+html.is-dark .trending .widget.PopularPosts .widget-title .title {
+    color: #d0d0d0;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-title:before {
+    background: #303030;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-title:after {
+    background: #222;
+}
+
+html.is-dark .trending .widget.PopularPosts .widget-title .title:before {
+    color: #b0b0b0;
+}
+
+/* 위젯 배경 및 테두리 */
+html.is-dark .trending .widget.PopularPosts:after {
+    background: #303030;
+    width: 3px;
+}
+
+html.is-dark .trending .widget.PopularPosts {
+    background-color: #202020;
+}
+
+.trending .widget.PopularPosts .widget-title {
+    margin-left: 5px;
+    margin-right: 5px;
+    position: relative;
+}
+
+.trending .widget.PopularPosts .widget-title:before {
+    content: "";
+    background: #555555;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    z-index: 1;
+    border-radius: 12px;
+}

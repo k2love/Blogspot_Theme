@@ -1,0 +1,38 @@
+/* Light mode styles */
+.important {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba; 
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+.important::before {
+    content: "Important: ";
+    font-weight: bold;
+    color: #856404;
+}
+
+.tip {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    padding: 15px;
+    margin: 15px 0; 
+    border-radius: 4px;
+    color: var(--text-color);
+}
+
+.tip p:first-child {
+    margin-top: 0;
+}
+
+.tip strong {
+    color: #495057;
+    font-weight: bold;
+}
+
+.tip::before {
+    content: "Tip: ";
+    font-weight: bold;
+    color: #495057;
+}

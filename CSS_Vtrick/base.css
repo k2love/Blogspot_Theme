@@ -1,0 +1,56 @@
+/* 기본 스타일 */
+body {
+    line-height: 1.8;
+    color: #333;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* 제목 스타일 */
+h1, h2, h3, h4 {
+    margin-top: 2.5em;
+    margin-bottom: 1.2em;
+    line-height: 1.6;
+}
+
+/* 텍스트 요소 */
+p {
+    margin-bottom: 1.5em;
+    line-height: 1.8;
+}
+
+/* 리스트 스타일링 */
+ul, ol {
+    margin: 2em 0;
+    padding-left: 2em;
+    line-height: 2;
+}
+
+li {
+    margin: 1.2em 0;
+    padding-left: 0.5em;
+}
+
+/* 리스트 들여쓰기 */
+li > * {
+    margin-left: 2rem;
+    line-height: 1.8;
+}
+
+li > ul, 
+li > ol {
+    margin: 1.2em 0;
+}
+
+li > br + * {
+    margin-left: 2rem;
+    display: inline-block;
+    line-height: 1.8;
+}
+
+/* 구분선 */
+hr {
+    margin: 2.5em 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}

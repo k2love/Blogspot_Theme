@@ -1,0 +1,35 @@
+/* Dark mode styles */
+html.is-dark .important {
+    background-color: #332701;
+    border-color: #665201;
+    color: #ffc;
+}
+
+html.is-dark .important::before {
+    color: #ffd866;
+}
+
+html.is-dark .tip {
+    background-color: #2a2a2a;
+    border-color: #404040;
+    color: var(--text-color);
+}
+
+html.is-dark .tip strong {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+html.is-dark .tip::before {
+    color: #ffffff;
+}
+
+html.is-dark li strong {
+    color: #dddddd !important;
+    font-weight: bold;
+}
+
+html.is-dark strong {
+    color: #dddddd !important;
+    font-weight: bold;
+}
