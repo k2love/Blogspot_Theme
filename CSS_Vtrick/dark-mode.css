@@ -1,4 +1,4 @@
-/* Dark mode styles */
+/* Important 알림창 다크모드 스타일 */
 html.is-dark .important {
     background-color: #332701;
     border-color: #665201;
@@ -9,6 +9,7 @@ html.is-dark .important::before {
     color: #ffd866;
 }
 
+/* Tip 알림창 다크모드 스타일 */
 html.is-dark .tip {
     background-color: #2a2a2a;
     border-color: #404040;
@@ -24,12 +25,22 @@ html.is-dark .tip::before {
     color: #ffffff;
 }
 
+/* 리스트 내 강조 텍스트 다크모드 스타일 */
 html.is-dark li strong {
     color: #dddddd !important;
     font-weight: bold;
 }
 
+/* 일반 강조 텍스트 다크모드 스타일 */
 html.is-dark strong {
     color: #dddddd !important;
     font-weight: bold;
+}
+
+/* 리스트 내 코드 블록 다크모드 스타일 */
+html.is-dark li code {
+    background-color: #2a2a2a;  /* 다크모드에 맞는 배경색 */
+    color: #dddddd;            /* 다크모드에 맞는 텍스트 색상 */
+    padding: 0.2em 0.4em;      /* 기존 padding 유지 */
+    border-radius: 3px;        /* 기존 border-radius 유지 */
 }
