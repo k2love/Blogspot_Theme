@@ -41,10 +41,14 @@ html.is-dark strong {
 html.is-dark code {
     background-color: #2a2a2a;
     color: #dddddd;
+    padding: 0.2em 0.4em;      /* padding 추가 */
+    border-radius: 3px;        /* border-radius 추가 */
 }
 
 /* pre 태그 내 코드 블록 다크모드 스타일 */
 html.is-dark pre code {
-    background-color: #2a2a2a;
-    color: #dddddd;
+    padding: 1em;          /* 여러 줄 코드 블록에 맞는 여백 */
+    border-radius: 6px;    /* 좀 더 큰 라운드 처리 */
+    display: block;        /* 블록 레벨로 표시 */
+    overflow-x: auto;      /* 가로 스크롤 필요시 표시 */
 }
