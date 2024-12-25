@@ -52,3 +52,19 @@ html.is-dark pre code {
     display: block;        /* 블록 레벨로 표시 */
     overflow-x: auto;      /* 가로 스크롤 필요시 표시 */
 }
+
+/* 일반 코드 블록 다크모드 스타일 */
+html.is-dark .post-body code {
+    background-color: #2a2a2a;
+    color: #dddddd;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+/* pre 내부 코드 블록 다크모드 스타일 */
+html.is-dark .post-body pre code {
+    padding: 1em;
+    border-radius: 6px;
+    display: block;
+    overflow-x: auto;
+}
