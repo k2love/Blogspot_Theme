@@ -61,3 +61,11 @@ html.is-dark .post-body code:not(pre[class*=language-]>code) {
     border-radius: .2rem;
     font-family: monospace;
 }
+
+.post-body code:not(pre[class*=language-]>code) {
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
+    background: #ffeff0;
+    color: #954806;
+    font-family: monospace;
+}
