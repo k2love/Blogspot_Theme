@@ -55,3 +55,24 @@ html.is-dark li code {
     padding: 0.2em 0.4em;      /* 기존 padding 유지 */
     border-radius: 3px;        /* 기존 border-radius 유지 */
 }
+
+/* 다크모드 blockquote */
+html.is-dark blockquote {
+    background-color: #2a2a2a !important;
+    border-left: 4px solid #404040 !important;
+}
+
+html.is-dark blockquote p {
+    color: #dddddd !important;
+}
+
+html.is-dark blockquote strong {
+    color: #ffffff !important;
+}
+
+html.is-dark blockquote code {
+    background-color: #333333 !important;
+    color: #ff9776 !important;
+    padding: .1rem .3rem .2rem !important;
+    border-radius: .2rem !important;
+}
