@@ -6,6 +6,7 @@ html.is-dark .important {
 }
 
 html.is-dark .important::before {
+    background-color: #2a2a2a;  /* 진한 회색으로 변경 */    
     color: #dddddd;            /* Important: 텍스트도 회색으로 */
 }
 
