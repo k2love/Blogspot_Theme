@@ -53,19 +53,12 @@ html.is-dark pre code {
     overflow-x: auto;      /* 가로 스크롤 필요시 표시 */
 }
 
-/* 코드 블록 다크모드 스타일 */
+/* 코드 블록 다크모드 스타일 - 우선순위 높임 */
 html.is-dark .post-body code:not(pre[class*=language-]>code) {
-    background: #2a2a2a;
-    color: #dddddd;
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
-    font-family: monospace;
+    padding: .1rem .3rem .2rem !important;
+    border-radius: .2rem !important;
+    background: #2a2a2a !important;
+    color: #dddddd !important;
+    font-family: monospace !important;
 }
 
-.post-body code:not(pre[class*=language-]>code) {
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
-    background: #ffeff0;
-    color: #954806;
-    font-family: monospace;
-}
