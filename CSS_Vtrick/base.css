@@ -14,12 +14,9 @@ h1, h2, h3, h4 {
     clear: both; /* 들여쓰기가 이전 요소에 영향받지 않도록 */
 }
 
-/* 연속된 제목 태그 들여쓰기 */
-h1 + h2 {
-    margin-left: 16em;
-}
-h2 + h3 {
-    margin-left: 16em;
+/* 제목 들여쓰기 */
+h2 + h3, h2 ~ h3 { /* h2 다음에 오는 모든 h3 */
+    margin-left: 2em;
 }
 
 /* 텍스트 요소 */
