@@ -52,10 +52,9 @@ li > br + * {
     line-height: 1.8;
 }
 
-li > br + * {
-    margin-left: 4rem;
+li > span {
+    margin-left: 12rem;
     display: inline-block;
-    line-height: 1.8;
 }
 
 /* 구분선 */
