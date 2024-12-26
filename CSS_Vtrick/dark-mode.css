@@ -1,71 +1,44 @@
-/* Important 알림창 다크모드 스타일 */
+/* 다크모드 스타일 */
 html.is-dark .important {
     background-color: #332701;
     border-color: #665201;
     color: #ffc;
 }
+
 html.is-dark .important::before {
     color: #ffd866;
 }
 
-/* Tip 알림창 다크모드 스타일 */
 html.is-dark .tip {
     background-color: #2a2a2a;
     border-color: #404040;
     color: var(--text-color);
 }
+
 html.is-dark .tip strong {
     color: #ffffff;
     font-weight: bold;
 }
+
 html.is-dark .tip::before {
     color: #ffffff;
 }
 
-/* 리스트 내 강조 텍스트 다크모드 스타일 */
+/* 다크모드 strong */
 html.is-dark li strong {
-    color: #dddddd !important;
+    color: #ffffff !important;
     font-weight: bold;
 }
 
-/* 일반 강조 텍스트 다크모드 스타일 */
-html.is-dark strong {
-    color: #dddddd !important;
-    font-weight: bold;
+/* 다크모드 code */
+html.is-dark pre,
+html.is-dark code {
+    background-color: #2a2a2a;
+    color: #dddddd;
 }
 
-/* 코드 블록 다크모드 스타일 */
-html.is-dark .post-body code:not(pre[class*=language-]>code),
-html.is-dark p > code,
-html.is-dark li > code,
-html.is-dark td > code,
-html.is-dark strong > code {  /* strong 태그 안의 code에 대한 스타일 추가 */
-    padding: .1rem .3rem .2rem !important;
-    border-radius: .2rem !important;
-    background: #2a2a2a !important;
-    color: #ff9776 !important;
-    font-family: monospace !important;
-}
-
-/* 일반 텍스트의 strong 태그 */
-html.is-dark strong {
-    color: #dddddd !important;
-    font-weight: bold;
-}
-
-/* code 태그를 포함한 strong 태그 */
-html.is-dark strong code,
-html.is-dark code strong {
-    color: #dddddd !important;
+/* 다크모드 strong 내부 code */
+html.is-dark strong > code {
     background-color: #2a2a2a !important;
-    padding: .1rem .3rem .2rem !important;
-    border-radius: .2rem !important;
-    font-family: monospace !important;
-}
-
-/* 더 구체적인 선택자로 우선순위 높임 */
-html.is-dark .post-body strong,
-html.is-dark article strong {
     color: #dddddd !important;
-    font-weight: bold;
 }
