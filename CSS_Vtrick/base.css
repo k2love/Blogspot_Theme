@@ -53,12 +53,12 @@ ol > li > br + * {
 
 li {
     margin: 1.2em 0;
-    padding-left: 6em;   /* 2em에서 6em으로 증가 */
+    padding-left: 0; /* li 자체의 padding-left 제거 */
 }
 
 /* 리스트 들여쓰기 */
 li > * {
-    margin-left: 6rem;
+    margin-left: 6rem; /* li 안의 내용 들여쓰기 */
     line-height: 1.8;
 }
 
