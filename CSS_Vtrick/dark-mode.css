@@ -38,7 +38,8 @@ html.is-dark strong {
 html.is-dark .post-body code:not(pre[class*=language-]>code),
 html.is-dark p > code,
 html.is-dark li > code,
-html.is-dark td > code {
+html.is-dark td > code,
+html.is-dark strong > code {  /* strong 태그 안의 code에 대한 스타일 추가 */
     padding: .1rem .3rem .2rem !important;
     border-radius: .2rem !important;
     background: #2a2a2a !important;
