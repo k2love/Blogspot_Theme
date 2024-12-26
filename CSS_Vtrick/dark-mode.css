@@ -35,7 +35,10 @@ html.is-dark strong {
 }
 
 /* 코드 블록 다크모드 스타일 */
-html.is-dark .post-body code:not(pre[class*=language-]>code) {
+html.is-dark .post-body code:not(pre[class*=language-]>code),
+html.is-dark p > code,
+html.is-dark li > code,
+html.is-dark td > code {
     padding: .1rem .3rem .2rem !important;
     border-radius: .2rem !important;
     background: #2a2a2a !important;
