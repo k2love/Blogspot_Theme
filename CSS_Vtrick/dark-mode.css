@@ -1,7 +1,7 @@
 /* 다크모드 스타일 */
 html.is-dark .important {
-    background-color: #332701;
-    border-color: #665201;
+    background-color: #1c1501;  /* 더 어둡게 */
+    border-color: #4a3a01;      /* 더 어둡게 */
     color: #ffc;
 }
 
@@ -10,8 +10,8 @@ html.is-dark .important::before {
 }
 
 html.is-dark .tip {
-    background-color: #2a2a2a;
-    border-color: #404040;
+    background-color: #1a1a1a;  /* 더 어둡게 */
+    border-color: #2a2a2a;      /* 더 어둡게 */
     color: var(--text-color);
 }
 
@@ -26,20 +26,28 @@ html.is-dark .tip::before {
 
 /* 다크모드 strong */
 html.is-dark li strong {
-    color: #dddddd !important;
+    color: #cccccc !important;  /* 더 어둡게 */
     font-weight: bold;
 }
 
 html.is-dark strong {
-    color: #dddddd !important;
+    color: #cccccc !important;  /* 더 어둡게 */
     font-weight: bold;
 }
 
 /* 다크모드 code */
 html.is-dark pre,
 html.is-dark code {
-    background-color: #2a2a2a;
-    color: #dddddd;
+    background-color: #202020 !important;  /* 더 어둡게 */
+    color: #cccccc !important;  /* 더 어둡게 */
+}
+
+html.is-dark .post-body code:not(pre[class*=language-]>code) {
+    padding: .1rem .3rem .2rem !important;
+    border-radius: .2rem !important;
+    background: #202020 !important;  /* 더 어둡게 */
+    color: #cccccc !important;  /* 더 어둡게 */
+    font-family: monospace !important;
 }
 
 /* 다크모드 strong 내부 code */
@@ -58,16 +66,18 @@ html.is-dark li code {
 
 /* 다크모드 blockquote */
 html.is-dark blockquote {
-    background-color: #2a2a2a !important;
-    border-left: 4px solid #404040 !important;
+    background-color: #1a1a1a !important;  /* 더 어둡게 */
+    border-left: 4px solid #2a2a2a !important;  /* 더 어둡게 */
+    color: #cccccc !important;  /* 더 어둡게 */
 }
 
 html.is-dark blockquote p {
     color: #dddddd !important;
 }
 
-html.is-dark blockquote strong {
-    color: #ffffff !important;
+html.is-dark blockquote code {
+    background-color: #202020 !important;  /* 더 어둡게 */
+    color: #cccccc !important;  /* 더 어둡게 */
 }
 
 html.is-dark blockquote code {
