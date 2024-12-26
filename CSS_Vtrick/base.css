@@ -6,11 +6,20 @@ body {
     padding: 0 1.5rem;
 }
 
-/* 제목 스타일 */
+/* 제목 스타일에 들여쓰기 관련 속성 추가 */
 h1, h2, h3, h4 {
     margin-top: 2.5em;
     margin-bottom: 1.2em;
     line-height: 1.6;
+    clear: both; /* 들여쓰기가 이전 요소에 영향받지 않도록 */
+}
+
+/* 연속된 제목 태그 들여쓰기 */
+h1 + h2 {
+    margin-left: 2em;
+}
+h2 + h3 {
+    margin-left: 2em;
 }
 
 /* 텍스트 요소 */
@@ -19,27 +28,27 @@ p {
     line-height: 1.8;
 }
 
-/* 리스트 스타일링 */
+/* 리스트 스타일링 - 들여쓰기 3배 증가 */
 ul, ol {
     margin: 2em 0;
-    padding-left: 4em;
+    padding-left: 12em;  /* 4em에서 12em으로 증가 */
     line-height: 2;
 }
 
 li {
     margin: 1.2em 0;
-    padding-left: 2em;
+    padding-left: 6em;   /* 2em에서 6em으로 증가 */
 }
 
-/* 리스트 들여쓰기 */
+/* 리스트 들여쓰기 - 3배 증가 */
 li > * {
-    margin-left: 6rem;
+    margin-left: 18rem;  /* 6rem에서 18rem으로 증가 */
     line-height: 1.8;
 }
-
-li > ul, 
-li > ol {
-    margin: 1.2em 0;
+li > br + * {
+    margin-left: 12rem;  /* 4rem에서 12rem으로 증가 */
+    display: inline-block;
+    line-height: 1.8;
 }
 
 li > br + * {
