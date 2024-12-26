@@ -35,6 +35,28 @@ ul, ol {
     line-height: 2;
 }
 
+ol {
+    margin: 2em 0;
+    padding-left: 4em;  /* ol의 들여쓰기 */
+    line-height: 2;
+}
+
+ol > li {
+    margin: 1.2em 0;
+    padding-left: 2em;  /* li의 들여쓰기 */
+}
+
+ol > li > strong {
+    margin-left: 2em;  /* strong의 들여쓰기 */
+    display: inline-block;
+}
+
+ol > li > br + * {
+    margin-left: 6em;  /* br 이후 텍스트의 들여쓰기 */
+    display: inline-block;
+    line-height: 1.8;
+}
+
 li {
     margin: 1.2em 0;
     padding-left: 4em;   /* 2em에서 4em으로 증가 */
