@@ -35,41 +35,35 @@ ul, ol {
     line-height: 2;
 }
 
-ol {
-    margin: 2em 0;
-    padding-left: 4em;  /* ol의 들여쓰기 */
-    line-height: 2;
-}
-
 ol > li {
     margin: 1.2em 0;
-    padding-left: 2em;  /* li의 들여쓰기 */
+    padding-left: 6em;  /* li의 들여쓰기 */
 }
 
 ol > li > strong {
-    margin-left: 2em;  /* strong의 들여쓰기 */
+    margin-left: 6em;  /* strong의 들여쓰기 */
     display: inline-block;
 }
 
 ol > li > br + * {
-    margin-left: 40em;  /* br 이후 텍스트의 들여쓰기 */
+    margin-left: 6em;  /* br 이후 텍스트의 들여쓰기 */
     display: inline-block;
     line-height: 1.8;
 }
 
 li {
     margin: 1.2em 0;
-    padding-left: 4em;   /* 2em에서 4em으로 증가 */
+    padding-left: 6em;   /* 2em에서 6em으로 증가 */
 }
 
 /* 리스트 들여쓰기 */
 li > * {
-    margin-left: 12rem;  /* 6rem에서 12rem으로 증가 */
+    margin-left: 6rem;
     line-height: 1.8;
 }
 
 li > br + * {
-    margin-left: 25rem;  /* 4rem에서 25rem으로 증가 */
+    margin-left: 6rem;
     display: inline-block;
     line-height: 1.8;
 }
