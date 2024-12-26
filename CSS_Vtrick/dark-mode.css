@@ -39,6 +39,6 @@ html.is-dark .post-body code:not(pre[class*=language-]>code) {
     padding: .1rem .3rem .2rem !important;
     border-radius: .2rem !important;
     background: #2a2a2a !important;
-    color: #dddddd !important;
+    color: #ff9776 !important;
     font-family: monospace !important;
 }
