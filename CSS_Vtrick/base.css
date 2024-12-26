@@ -16,10 +16,10 @@ h1, h2, h3, h4 {
 
 /* 연속된 제목 태그 들여쓰기 */
 h1 + h2 {
-    margin-left: 8em;
+    margin-left: 16em;
 }
 h2 + h3 {
-    margin-left: 8em;
+    margin-left: 16em;
 }
 
 /* 텍스트 요소 */
@@ -46,7 +46,7 @@ ol > li > strong {
 }
 
 ol > li > br + * {
-    margin-left: 20em;  /* br 이후 텍스트의 들여쓰기 */
+    margin-left: 6em;  /* br 이후 텍스트의 들여쓰기 */
     display: inline-block;
     line-height: 1.8;
 }
