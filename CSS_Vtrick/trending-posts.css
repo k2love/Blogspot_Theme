@@ -92,6 +92,8 @@ html.is-dark .trending .widget.PopularPosts {
 }
 
 .trending .widget.PopularPosts .widget-title {
+    margin-left: 5px;
+    margin-right: 5px;
     margin-top: 4rem;
     flex: 0 0 180px;
     margin-right: 1rem;
