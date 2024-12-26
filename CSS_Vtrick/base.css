@@ -46,7 +46,7 @@ ol > li > strong {
 }
 
 ol > li > br + * {
-    margin-left: 6em;  /* br 이후 텍스트의 들여쓰기 */
+    margin-left: 20em;  /* br 이후 텍스트의 들여쓰기 */
     display: inline-block;
     line-height: 1.8;
 }
