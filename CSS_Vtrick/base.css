@@ -22,7 +22,7 @@ p {
 /* 리스트 스타일링 */
 ul, ol {
     margin: 2em 0;
-    padding-left: 2em;
+    padding-left: 4em;
     line-height: 2;
 }
 
@@ -33,7 +33,7 @@ li {
 
 /* 리스트 들여쓰기 */
 li > * {
-    margin-left: 2rem;
+    margin-left: 4rem;
     line-height: 1.8;
 }
 
