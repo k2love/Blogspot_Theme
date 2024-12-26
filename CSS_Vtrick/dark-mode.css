@@ -97,3 +97,33 @@ html.is-dark blockquote code {
     padding: .1rem .3rem .2rem !important;
     border-radius: .2rem !important;
 }
+
+/* Dark mode styles - 더 구체적인 선택자 사용 */
+html.is-dark body .important,
+html.is-dark .post-body .important,
+html.is-dark article .important {
+    background-color: #2a2a2a !important;
+    border-color: #404040 !important;
+    color: #cccccc !important;
+}
+
+html.is-dark body .important::before,
+html.is-dark .post-body .important::before,
+html.is-dark article .important::before {
+    color: #dddddd !important;
+}
+
+/* important 안의 리스트 스타일 */
+html.is-dark body .important ul li,
+html.is-dark .post-body .important ul li,
+html.is-dark article .important ul li {
+    color: #cccccc !important;
+}
+
+/* important 안의 strong 태그 */
+html.is-dark body .important strong,
+html.is-dark .post-body .important strong,
+html.is-dark article .important strong {
+    color: #ffffff !important;
+    font-weight: bold !important;
+}
