@@ -26,7 +26,12 @@ html.is-dark .tip::before {
 
 /* 다크모드 strong */
 html.is-dark li strong {
-    color: #ffffff !important;
+    color: #dddddd !important;
+    font-weight: bold;
+}
+
+html.is-dark strong {
+    color: #dddddd !important;
     font-weight: bold;
 }
 
@@ -41,4 +46,12 @@ html.is-dark code {
 html.is-dark strong > code {
     background-color: #2a2a2a !important;
     color: #dddddd !important;
+}
+
+/* 다크모드에서 li 안의 code 스타일 */
+html.is-dark li code {
+    background-color: #2a2a2a;  /* 다크모드에 맞는 배경색 */
+    color: #dddddd;            /* 다크모드에 맞는 텍스트 색상 */
+    padding: 0.2em 0.4em;      /* 기존 padding 유지 */
+    border-radius: 3px;        /* 기존 border-radius 유지 */
 }
