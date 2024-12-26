@@ -4,7 +4,6 @@ html.is-dark .important {
     border-color: #665201;
     color: #ffc;
 }
-
 html.is-dark .important::before {
     color: #ffd866;
 }
@@ -15,12 +14,10 @@ html.is-dark .tip {
     border-color: #404040;
     color: var(--text-color);
 }
-
 html.is-dark .tip strong {
     color: #ffffff;
     font-weight: bold;
 }
-
 html.is-dark .tip::before {
     color: #ffffff;
 }
@@ -37,23 +34,7 @@ html.is-dark strong {
     font-weight: bold;
 }
 
-/* 모든 코드 블록 다크모드 스타일 */
-html.is-dark code {
-    background-color: #2a2a2a;
-    color: #dddddd;
-    padding: 0.2em 0.4em;      /* padding 추가 */
-    border-radius: 3px;        /* border-radius 추가 */
-}
-
-/* pre 태그 내 코드 블록 다크모드 스타일 */
-html.is-dark pre code {
-    padding: 1em;          /* 여러 줄 코드 블록에 맞는 여백 */
-    border-radius: 6px;    /* 좀 더 큰 라운드 처리 */
-    display: block;        /* 블록 레벨로 표시 */
-    overflow-x: auto;      /* 가로 스크롤 필요시 표시 */
-}
-
-/* 코드 블록 다크모드 스타일 - 우선순위 높임 */
+/* 코드 블록 다크모드 스타일 */
 html.is-dark .post-body code:not(pre[class*=language-]>code) {
     padding: .1rem .3rem .2rem !important;
     border-radius: .2rem !important;
@@ -61,4 +42,3 @@ html.is-dark .post-body code:not(pre[class*=language-]>code) {
     color: #dddddd !important;
     font-family: monospace !important;
 }
-
