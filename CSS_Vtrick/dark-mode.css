@@ -2,34 +2,34 @@
 html.is-dark body .important,
 html.is-dark .post-body .important,
 html.is-dark article .important {
-    background-color: #2a2a2a !important;
-    border-color: #404040 !important;
-    color: #cccccc !important;
+    background-color: #2a2a2a;
+    border-color: #404040;
+    color: #cccccc;
 }
 
 html.is-dark body .important::before,
 html.is-dark .post-body .important::before,
 html.is-dark article .important::before {
-    color: #dddddd !important;
+    color: #dddddd;
 }
 
 html.is-dark body .important ul li,
 html.is-dark .post-body .important ul li,
 html.is-dark article .important ul li {
-    color: #cccccc !important;
+    color: #cccccc;
 }
 
 html.is-dark body .important strong,
 html.is-dark .post-body .important strong,
 html.is-dark article .important strong {
-    color: #ffffff !important;
-    font-weight: bold !important;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 html.is-dark .tip {
     background-color: #2a2a2a;
     border-color: #404040;
-    color: var(--text-color);
+    color: var(--text-color); /* 정의되어 있는지 확인 필요 */
 }
 
 html.is-dark .tip strong {
@@ -42,27 +42,27 @@ html.is-dark .tip::before {
 }
 
 html.is-dark strong {
-    color: #ffffff !important;
+    color: #ffffff;
     font-weight: bold;
 }
 
 html.is-dark strong > code {
-    background-color: #2a2a2a !important;
-    color: #dddddd !important;
+    background-color: #2a2a2a;
+    color: #dddddd;
 }
 
 html.is-dark pre,
 html.is-dark code {
-    background-color: #202020 !important;
-    color: #cccccc !important;
+    background-color: #202020;
+    color: #cccccc;
 }
 
 html.is-dark .post-body code:not(pre[class*=language-]>code) {
-    padding: .1rem .3rem .2rem !important;
-    border-radius: .2rem !important;
-    background: #202020 !important;
-    color: #cccccc !important;
-    font-family: monospace !important;
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
+    background: #202020;
+    color: #cccccc;
+    font-family: monospace;
 }
 
 html.is-dark li code {
@@ -73,18 +73,18 @@ html.is-dark li code {
 }
 
 html.is-dark blockquote {
-    background-color: #1a1a1a !important;
-    border-left: 4px solid #2a2a2a !important;
-    color: #cccccc !important;
+    background-color: #1a1a1a;
+    border-left: 4px solid #2a2a2a;
+    color: #cccccc;
 }
 
 html.is-dark blockquote p {
-    color: #dddddd !important;
+    color: #dddddd;
 }
 
 html.is-dark blockquote code {
-    background-color: #333333 !important;
-    color: #ff9776 !important;
-    padding: .1rem .3rem .2rem !important;
-    border-radius: .2rem !important;
+    background-color: #333333;
+    color: #ff9776;
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
 }
