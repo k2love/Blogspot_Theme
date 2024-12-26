@@ -46,3 +46,26 @@ html.is-dark strong > code {  /* strong 태그 안의 code에 대한 스타일 �
     color: #ff9776 !important;
     font-family: monospace !important;
 }
+
+/* 일반 텍스트의 strong 태그 */
+html.is-dark strong {
+    color: #dddddd !important;
+    font-weight: bold;
+}
+
+/* code 태그를 포함한 strong 태그 */
+html.is-dark strong code,
+html.is-dark code strong {
+    color: #dddddd !important;
+    background-color: #2a2a2a !important;
+    padding: .1rem .3rem .2rem !important;
+    border-radius: .2rem !important;
+    font-family: monospace !important;
+}
+
+/* 더 구체적인 선택자로 우선순위 높임 */
+html.is-dark .post-body strong,
+html.is-dark article strong {
+    color: #dddddd !important;
+    font-weight: bold;
+}
