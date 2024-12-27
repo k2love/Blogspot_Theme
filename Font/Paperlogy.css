@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family: 'font-R';
+    font-weight: 400;
+    font-style: normal;
+    src: url('./Paperlogy-4Regular.eot');
+    src: url('./Paperlogy-4Regular.eot?#iefix') format('embedded-opentype'),
+        url('./Paperlogy-4Regular.woff2') format('woff2'),
+        url('./Paperlogy-4Regular.woff') format('woff'),
+        url('./Paperlogy-4Regular.ttf') format("truetype");
+    font-display: swap;
+}
+@font-face {
+    font-family: 'font-B';
+    font-weight: 700;
+    font-style: normal;
+    src: url('./Paperlogy-7Bold.eot');
+    src: url('./Paperlogy-7Bold.eot?#iefix') format('embedded-opentype'),
+        url('./Paperlogy-7Bold.woff2') format('woff2'),
+        url('./Paperlogy-7Bold.woff') format('woff'),
+        url('./Paperlogy-7Bold.ttf') format("truetype");
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'font-H';
+    font-weight: 900;
+    font-style: normal;
+    src: url('./Paperlogy-9Black.eot');
+    src: url('./Paperlogy-9Black.eot?#iefix') format('embedded-opentype'),
+        url('./Paperlogy-9Black.woff2') format('woff2'),
+        url('./Paperlogy-9Black.woff') format('woff'),
+        url('./Paperlogy-9Black.ttf') format("truetype");
+    font-display: swap;
+}
+
+h2 {font-weight: normal !important;}
