@@ -3,32 +3,60 @@ class YouTubeSRTPlayer {
         this.player = null;
         this.isPlaying = false;
         this.subtitles = [];
-        this.subtitleUpdateInterval = null;
-
-        // 이벤트 바인딩
-        window.onYouTubeIframeAPIReady = () => this.createPlayer();
-        window.addEventListener('scroll', () => this.handleScroll());
-
+        
         // YouTube API 로드
+        this.loadYouTubeAPI();
+        
+        // 스크롤 이벤트 리스너 추가
+        window.addEventListener('scroll', () => this.handleScroll());
+    }
+
+    loadYouTubeAPI() {
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
-        document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // YouTube API 로드 완료 후 호출될 전역 함수
+        window.onYouTubeIframeAPIReady = () => {
+            this.setupPlayer();
+        };
     }
 
-    createPlayer() {
-        if (!window.YOUTUBE_CONFIG) return;
-
-        this.player = new YT.Player('player', {
-            videoId: window.YOUTUBE_CONFIG.videoId,
+    setupPlayer(videoId = null, srtUrl = null) {
+        // videoId와 srtUrl을 인자로 받거나 기본값 사용
+        const playerConfig = {
+            videoId: videoId || this.getVideoIdFromConfig(),
             events: {
-                'onReady': () => this.onPlayerReady(),
-                'onStateChange': (event) => this.onPlayerStateChange(event)
+                'onReady': (event) => this.onPlayerReady(event, srtUrl),
+                'onStateChange': (event) => this.onPlayerStateChange(event),
+                'onError': (error) => this.handlePlayerError(error)
             }
-        });
+        };
+
+        const playerElement = document.getElementById('player');
+        if (!playerElement) {
+            console.error('Player element not found');
+            return;
+        }
+
+        this.player = new YT.Player(playerElement, playerConfig);
     }
 
-    onPlayerReady() {
-        this.loadSubtitles();
+    getVideoIdFromConfig() {
+        // 전역 설정에서 비디오 ID 가져오기 (선택적)
+        return window.YOUTUBE_CONFIG && window.YOUTUBE_CONFIG.videoId 
+            ? window.YOUTUBE_CONFIG.videoId 
+            : null;
+    }
+
+    onPlayerReady(event, srtUrl = null) {
+        console.log('Player is ready');
+        // SRT URL을 제공받았거나 설정에서 가져오기
+        const subtitleUrl = srtUrl || (window.YOUTUBE_CONFIG && window.YOUTUBE_CONFIG.srtUrl);
+        if (subtitleUrl) {
+            this.loadSubtitles(subtitleUrl);
+        }
     }
 
     onPlayerStateChange(event) {
@@ -36,9 +64,16 @@ class YouTubeSRTPlayer {
         this.handleScroll();
     }
 
+    handlePlayerError(error) {
+        console.error('YouTube Player Error:', error);
+    }
+
     handleScroll() {
         const videoContainer = document.querySelector('.video-container');
         const wrapper = document.querySelector('.sticky-wrapper');
+        
+        if (!videoContainer || !wrapper) return;
+
         const rect = wrapper.getBoundingClientRect();
         
         if (rect.top <= 0 && this.isPlaying) {
@@ -54,12 +89,17 @@ class YouTubeSRTPlayer {
         }
     }
 
-    async loadSubtitles() {
+    async loadSubtitles(srtUrl) {
         try {
-            const response = await fetch(window.YOUTUBE_CONFIG.srtUrl);
+            const response = await fetch(srtUrl);
             const srtContent = await response.text();
             this.subtitles = this.parseSRT(srtContent);
-            setInterval(() => this.updateSubtitle(), 100);
+            
+            // 자막 업데이트 인터벌 설정
+            if (this.subtitleInterval) {
+                clearInterval(this.subtitleInterval);
+            }
+            this.subtitleInterval = setInterval(() => this.updateSubtitle(), 100);
         } catch (error) {
             console.error('자막 로드 실패:', error);
         }
@@ -77,7 +117,7 @@ class YouTubeSRTPlayer {
             const [startTime, endTime] = timeCode.split(' --> ').map(timeStr => {
                 const [time, ms] = timeStr.trim().split(',');
                 const [hours, minutes, seconds] = time.split(':').map(Number);
-                return (hours * 3600000 + minutes * 60000 + seconds * 1000 + parseInt(ms));
+                return (hours * 3600000 + minutes * 60000 + seconds * 1000 + parseInt(ms || 0));
             });
 
             return {
@@ -98,34 +138,14 @@ class YouTubeSRTPlayer {
         );
 
         const subtitleText = document.getElementById('subtitle-text');
-        if (currentSubtitle) {
-            subtitleText.textContent = currentSubtitle.text;
-        } else {
-            subtitleText.textContent = '';
+        if (subtitleText) {
+            subtitleText.textContent = currentSubtitle ? currentSubtitle.text : '';
         }
     }
 }
 
+// DOMContentLoaded 이벤트 리스너
 document.addEventListener('DOMContentLoaded', () => {
+    // 전역 객체로 인스턴스 노출
     window.youtubeSRTPlayer = new YouTubeSRTPlayer();
 });
-
-setupPlayer(videoId, srtUrl) {
-    const playerElement = document.getElementById('player');
-    if (!playerElement) {
-        console.error('Player element not found');
-        return;
-    }
-
-    // iframe을 직접 사용
-    this.player = new YT.Player(playerElement, {
-        events: {
-            'onReady': () => {
-                console.log('Player ready');
-                this.onPlayerReady(srtUrl);
-            },
-            'onStateChange': this.onPlayerStateChange,
-            'onError': this.handlePlayerError
-        }
-    });
-}
