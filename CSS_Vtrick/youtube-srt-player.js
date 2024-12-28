@@ -57,34 +57,42 @@ class YouTubeSRTPlayer {
     /**
      * YouTube 플레이어 생성
      */
-    createPlayer(videoId, srtUrl) {
-        console.log("Creating player...");
-        this.player = new YT.Player('player', {
-            videoId: videoId,
-            width: '100%',
-            height: '100%',
-            playerVars: {
-                'host': 'https://www.youtube.com',
-                'origin': window.location.origin,
-                'enablejsapi': 1,
-                'autoplay': 0,
-                'controls': 1,
-                'playsinline': 1,
-                'modestbranding': 1,
-                'rel': 0
+createPlayer(videoId, srtUrl) {
+    console.log("Creating player...");
+    const playerElement = document.getElementById('player');
+    
+    // player div의 크기 확인
+    console.log("Player element size:", {
+        width: playerElement.offsetWidth,
+        height: playerElement.offsetHeight
+    });
+
+    this.player = new YT.Player('player', {
+        videoId: videoId,
+        playerVars: {
+            'host': 'https://www.youtube.com',
+            'origin': window.location.origin,
+            'enablejsapi': 1,
+            'autoplay': 0,
+            'controls': 1,
+            'playsinline': 1,
+            'modestbranding': 1,
+            'rel': 0,
+            'fs': 1,  // 전체화면 버튼 활성화
+            'iv_load_policy': 3  // 주석 비활성화
+        },
+        events: {
+            'onReady': () => {
+                console.log("Player ready");
+                this.onPlayerReady(srtUrl);
             },
-            events: {
-                'onReady': () => {
-                    console.log("Player ready");
-                    this.onPlayerReady(srtUrl);
-                },
-                'onStateChange': (event) => this.onPlayerStateChange(event),
-                'onError': (event) => {
-                    console.error("Player error:", event.data);
-                }
+            'onStateChange': (event) => this.onPlayerStateChange(event),
+            'onError': (event) => {
+                console.error("Player error:", event.data);
             }
-        });
-    }
+        }
+    });
+}
 
     /**
      * SRT 파일 파싱
