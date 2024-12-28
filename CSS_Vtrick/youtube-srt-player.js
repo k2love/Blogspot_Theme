@@ -109,3 +109,23 @@ class YouTubeSRTPlayer {
 document.addEventListener('DOMContentLoaded', () => {
     window.youtubeSRTPlayer = new YouTubeSRTPlayer();
 });
+
+setupPlayer(videoId, srtUrl) {
+    const playerElement = document.getElementById('player');
+    if (!playerElement) {
+        console.error('Player element not found');
+        return;
+    }
+
+    // iframe을 직접 사용
+    this.player = new YT.Player(playerElement, {
+        events: {
+            'onReady': () => {
+                console.log('Player ready');
+                this.onPlayerReady(srtUrl);
+            },
+            'onStateChange': this.onPlayerStateChange,
+            'onError': this.handlePlayerError
+        }
+    });
+}
