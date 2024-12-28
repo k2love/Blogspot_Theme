@@ -57,35 +57,42 @@ class YouTubeSRTPlayer {
     /**
      * YouTube 플레이어 생성
      */
-    createPlayer(videoId, srtUrl) {
-        const playerDiv = document.getElementById('player');
-        if (!playerDiv) {
-            console.error('Player element not found');
-            return;
-        }
-    
-        this.player = new YT.Player('player', {
-            videoId: videoId,
-            width: playerDiv.clientWidth,
-            height: playerDiv.clientHeight,
-            playerVars: {
-                'host': 'https://www.youtube.com',
-                'origin': window.location.origin,
-                'enablejsapi': 1,
-                'autoplay': 0,
-                'controls': 1,
-                'playsinline': 1,
-                'modestbranding': 1,
-                'rel': 0,
-                'showinfo': 0
-            },
-            events: {
-                'onReady': () => this.onPlayerReady(srtUrl),
-                'onStateChange': (event) => this.onPlayerStateChange(event),
-                'onError': (event) => console.error("Player error:", event.data)
-            }
-        });
+createPlayer(videoId, srtUrl) {
+    const playerDiv = document.getElementById('player');
+    if (!playerDiv) {
+        console.error('Player element not found');
+        return;
     }
+
+    // wrapper 크기 확인
+    const wrapper = playerDiv.closest('.video-wrapper');
+    const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : null;
+    console.log('Wrapper dimensions:', wrapperRect);
+
+    this.player = new YT.Player('player', {
+        videoId: videoId,
+        playerVars: {
+            'host': 'https://www.youtube.com',
+            'origin': window.location.origin,
+            'enablejsapi': 1,
+            'autoplay': 0,
+            'controls': 1,
+            'playsinline': 1,
+            'modestbranding': 1,
+            'rel': 0,
+            'showinfo': 0,
+            'widget_referrer': window.location.href
+        },
+        events: {
+            'onReady': (event) => {
+                console.log('Player iframe created:', event.target.getIframe());
+                this.onPlayerReady(srtUrl);
+            },
+            'onStateChange': (event) => this.onPlayerStateChange(event),
+            'onError': (event) => console.error("Player error:", event.data)
+        }
+    });
+}
 
     /**
      * SRT 파일 파싱
