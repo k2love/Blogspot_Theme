@@ -1,41 +1,41 @@
 /**
  * YouTube SRT Player
- * À¯Æ©ºê ¿µ»ó°ú SRT ÀÚ¸·À» µ¿±âÈ­ÇÏ¿© Ç¥½ÃÇÏ´Â ÇÃ·¹ÀÌ¾î
- * Àç»ı ½Ã ½ºÅ©·Ñ¿¡ µû¶ó ¿µ»óÀÌ °íÁ¤µÇ´Â ±â´É Æ÷ÇÔ
+ * ìœ íŠœë¸Œ ì˜ìƒê³¼ SRT ìë§‰ì„ ë™ê¸°í™”í•˜ì—¬ í‘œì‹œí•˜ëŠ” í”Œë ˆì´ì–´
+ * ì¬ìƒ ì‹œ ìŠ¤í¬ë¡¤ì— ë”°ë¼ ì˜ìƒì´ ê³ ì •ë˜ëŠ” ê¸°ëŠ¥ í¬í•¨
  */
 
 /**
- * SRT ÆÄÀÏÀ» ÆÄ½ÌÇÏ´Â ÇÔ¼ö
- * @param {string} srtContent - SRT ÆÄÀÏÀÇ ÅØ½ºÆ® ³»¿ë
+ * SRT íŒŒì¼ì„ íŒŒì‹±í•˜ëŠ” í•¨ìˆ˜
+ * @param {string} srtContent - SRT íŒŒì¼ì˜ í…ìŠ¤íŠ¸ ë‚´ìš©
  * @returns {Array<{index: number, startTime: number, endTime: number, text: string}>}
  */
 const parseSRT = (srtContent) => {
-    // ÁÙ¹Ù²Ş ¹®ÀÚ Á¤±ÔÈ­ (\r\n, \r ¸¦ \nÀ¸·Î ÅëÀÏ)
+    // ì¤„ë°”ê¿ˆ ë¬¸ì ì •ê·œí™” (\r\n, \r ë¥¼ \nìœ¼ë¡œ í†µì¼)
     const normalizedContent = srtContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-    // ºó ÁÙÀ» ±âÁØÀ¸·Î ÀÚ¸· Ç×¸ñµéÀ» ºĞ¸®
+    // ë¹ˆ ì¤„ì„ ê¸°ì¤€ìœ¼ë¡œ ìë§‰ í•­ëª©ë“¤ì„ ë¶„ë¦¬
     const entries = normalizedContent.trim().split('\n\n');
 
     return entries.map(entry => {
-        // °¢ Ç×¸ñÀ» ÁÙ ´ÜÀ§·Î ºĞ¸®
+        // ê° í•­ëª©ì„ ì¤„ ë‹¨ìœ„ë¡œ ë¶„ë¦¬
         const lines = entry.trim().split('\n');
-        if (lines.length < 3) return null;  // À¯È¿ÇÏÁö ¾ÊÀº Ç×¸ñ Á¦¿Ü
+        if (lines.length < 3) return null;  // ìœ íš¨í•˜ì§€ ì•Šì€ í•­ëª© ì œì™¸
 
-        // ½Ã°£ Á¤º¸ ÆÄ½Ì (¿¹: "00:00:01,000 --> 00:00:04,000")
+        // ì‹œê°„ ì •ë³´ íŒŒì‹± (ì˜ˆ: "00:00:01,000 --> 00:00:04,000")
         const timeCode = lines[1].trim();
         const [startTime, endTime] = timeCode.split(' --> ').map(timeStr => {
             const [time, ms] = timeStr.trim().split(',');
             const [hours, minutes, seconds] = time.split(':').map(Number);
             
-            // ¸ğµç ½Ã°£À» ¹Ğ¸®ÃÊ ´ÜÀ§·Î º¯È¯
+            // ëª¨ë“  ì‹œê°„ì„ ë°€ë¦¬ì´ˆ ë‹¨ìœ„ë¡œ ë³€í™˜
             return (
-                hours * 3600000 +    // ½Ã°£ ¡æ ¹Ğ¸®ÃÊ
-                minutes * 60000 +    // ºĞ ¡æ ¹Ğ¸®ÃÊ
-                seconds * 1000 +     // ÃÊ ¡æ ¹Ğ¸®ÃÊ
-                parseInt(ms)         // ¹Ğ¸®ÃÊ
+                hours * 3600000 +    // ì‹œê°„ â†’ ë°€ë¦¬ì´ˆ
+                minutes * 60000 +    // ë¶„ â†’ ë°€ë¦¬ì´ˆ
+                seconds * 1000 +     // ì´ˆ â†’ ë°€ë¦¬ì´ˆ
+                parseInt(ms)         // ë°€ë¦¬ì´ˆ
             );
         });
 
-        // ÀÚ¸· ÅØ½ºÆ® ÃßÃâ (¿©·¯ ÁÙÀÏ ¼ö ÀÖÀ½)
+        // ìë§‰ í…ìŠ¤íŠ¸ ì¶”ì¶œ (ì—¬ëŸ¬ ì¤„ì¼ ìˆ˜ ìˆìŒ)
         const text = lines.slice(2).join('\n').trim();
 
         return {
@@ -44,39 +44,60 @@ const parseSRT = (srtContent) => {
             endTime,
             text
         };
-    }).filter(entry => entry !== null);  // null Ç×¸ñ Á¦°Å
+    }).filter(entry => entry !== null);  // null í•­ëª© ì œê±°
 };
 
-// Àü¿ª º¯¼ö ¼±¾ğ
-let player;          // YouTube ÇÃ·¹ÀÌ¾î ÀÎ½ºÅÏ½º
-let subtitles = [];  // ÆÄ½ÌµÈ ÀÚ¸· µ¥ÀÌÅÍ
-let isPlaying = false; // Àç»ı »óÅÂ
+// ì „ì—­ ë³€ìˆ˜ ì„ ì–¸
+let player;          // YouTube í”Œë ˆì´ì–´ ì¸ìŠ¤í„´ìŠ¤
+let subtitles = [];  // íŒŒì‹±ëœ ìë§‰ ë°ì´í„°
+let isPlaying = false; // ì¬ìƒ ìƒíƒœ
+let subtitleUpdateInterval; // ìë§‰ ì—…ë°ì´íŠ¸ ì¸í„°ë²Œ ID
 
 /**
- * SRT ÀÚ¸· ÆÄÀÏÀ» ·ÎµåÇÏ°í ÆÄ½ÌÇÏ´Â ÇÔ¼ö
- * @returns {Promise<Array>} ÆÄ½ÌµÈ ÀÚ¸· µ¥ÀÌÅÍ
+ * SRT ìë§‰ íŒŒì¼ì„ ë¡œë“œí•˜ê³  íŒŒì‹±í•˜ëŠ” í•¨ìˆ˜
+ * @param {string} srtUrl - SRT íŒŒì¼ì˜ URL
+ * @param {string} videoId - YouTube ë¹„ë””ì˜¤ ID
+ * @returns {Promise<Array>} íŒŒì‹±ëœ ìë§‰ ë°ì´í„°
  */
-async function loadSubtitles() {
+async function loadSubtitles(srtUrl, videoId) {
     try {
-        const response = await fetch('https://raw.githubusercontent.com/k2love/Script/refs/heads/main/1.%20n8n%20Beginner%20Course%20(1%209)%20-%20Introduction%20to%20Automation.srt');
+        // ê¸°ì¡´ ìë§‰ ì—…ë°ì´íŠ¸ ì¸í„°ë²Œ ì œê±°
+        if (subtitleUpdateInterval) {
+            clearInterval(subtitleUpdateInterval);
+        }
+
+        // ë¹„ë””ì˜¤ IDê°€ ì œê³µëœ ê²½ìš° í”Œë ˆì´ì–´ ì†ŒìŠ¤ ë³€ê²½
+        if (videoId && player.loadVideoById) {
+            player.loadVideoById(videoId);
+        }
+
+        const response = await fetch(srtUrl);
         const srtContent = await response.text();
-        return parseSRT(srtContent);
+        subtitles = parseSRT(srtContent);
+        
+        // ìƒˆë¡œìš´ ìë§‰ ì—…ë°ì´íŠ¸ ì¸í„°ë²Œ ì„¤ì •
+        subtitleUpdateInterval = setInterval(updateSubtitle, 100);
+        
+        return subtitles;
     } catch (error) {
-        console.error('ÀÚ¸·À» ºÒ·¯¿À´Âµ¥ ½ÇÆĞÇß½À´Ï´Ù:', error);
+        console.error('ìë§‰ì„ ë¶ˆëŸ¬ì˜¤ëŠ”ë° ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤:', error);
+        return [];
     }
 }
 
-// YouTube IFrame API ½ºÅ©¸³Æ® ·Îµå
+// YouTube IFrame API ìŠ¤í¬ë¦½íŠ¸ ë¡œë“œ
 const tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
 
 /**
- * YouTube IFrame API ÁØºñ ¿Ï·á ½Ã È£ÃâµÇ´Â ÇÔ¼ö
- * ÇÃ·¹ÀÌ¾î ÀÎ½ºÅÏ½º »ı¼º
+ * YouTube IFrame API ì¤€ë¹„ ì™„ë£Œ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+ * í”Œë ˆì´ì–´ ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+ * @param {string} initialVideoId - ì´ˆê¸° ë¹„ë””ì˜¤ ID
  */
-function onYouTubeIframeAPIReady() {
+function onYouTubeIframeAPIReady(initialVideoId) {
     player = new YT.Player('player', {
+        videoId: initialVideoId,
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
@@ -85,31 +106,28 @@ function onYouTubeIframeAPIReady() {
 }
 
 /**
- * ÇÃ·¹ÀÌ¾î ÁØºñ ¿Ï·á ½Ã È£ÃâµÇ´Â ÇÔ¼ö
- * ÀÚ¸· ·Îµå ¹× ¾÷µ¥ÀÌÆ® Å¸ÀÌ¸Ó ½ÃÀÛ
+ * í”Œë ˆì´ì–´ ì¤€ë¹„ ì™„ë£Œ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
  */
 function onPlayerReady(event) {
-    loadSubtitles().then(loadedSubtitles => {
-        subtitles = loadedSubtitles;
-        setInterval(updateSubtitle, 100);  // 100ms °£°İÀ¸·Î ÀÚ¸· ¾÷µ¥ÀÌÆ®
-    });
+    // í”Œë ˆì´ì–´ê°€ ì¤€ë¹„ë˜ë©´ ì´ˆê¸° ìë§‰ì„ ë¡œë“œí•  ìˆ˜ ìˆìŒ
+    // loadSubtitles() í•¨ìˆ˜ëŠ” ì™¸ë¶€ì—ì„œ í•„ìš”í•  ë•Œ í˜¸ì¶œ
 }
 
 /**
- * ÇÃ·¹ÀÌ¾î »óÅÂ º¯°æ ½Ã È£ÃâµÇ´Â ÇÔ¼ö
- * @param {Object} event - YouTube ÇÃ·¹ÀÌ¾î ÀÌº¥Æ® °´Ã¼
+ * í”Œë ˆì´ì–´ ìƒíƒœ ë³€ê²½ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
+ * @param {Object} event - YouTube í”Œë ˆì´ì–´ ì´ë²¤íŠ¸ ê°ì²´
  */
 function onPlayerStateChange(event) {
     isPlaying = (event.data === YT.PlayerState.PLAYING);
 }
 
 /**
- * ÇöÀç Àç»ı ½Ã°£¿¡ ¸Â´Â ÀÚ¸·À» È­¸é¿¡ Ç¥½ÃÇÏ´Â ÇÔ¼ö
+ * í˜„ì¬ ì¬ìƒ ì‹œê°„ì— ë§ëŠ” ìë§‰ì„ í™”ë©´ì— í‘œì‹œí•˜ëŠ” í•¨ìˆ˜
  */
 function updateSubtitle() {
     if (!player || !player.getCurrentTime) return;
 
-    const time = player.getCurrentTime() * 1000;  // ÃÊ¸¦ ¹Ğ¸®ÃÊ·Î º¯È¯
+    const time = player.getCurrentTime() * 1000;  // ì´ˆë¥¼ ë°€ë¦¬ì´ˆë¡œ ë³€í™˜
     const currentSubtitle = subtitles.find(subtitle => 
         time >= subtitle.startTime && time <= subtitle.endTime
     );
@@ -123,22 +141,22 @@ function updateSubtitle() {
 }
 
 /**
- * ½ºÅ©·Ñ ÀÌº¥Æ® Ã³¸®
- * Àç»ı ÁßÀÏ ¶§¸¸ ¿µ»óÀ» È­¸é »ó´Ü¿¡ °íÁ¤
+ * ìŠ¤í¬ë¡¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
+ * ì¬ìƒ ì¤‘ì¼ ë•Œë§Œ ì˜ìƒì„ í™”ë©´ ìƒë‹¨ì— ê³ ì •
  */
 window.addEventListener('scroll', function() {
     const videoContainer = document.querySelector('.video-container');
     const wrapper = document.querySelector('.sticky-wrapper');
     const rect = wrapper.getBoundingClientRect();
     
-    // Àç»ı ÁßÀÌ°í ½ºÅ©·ÑÀÌ ºñµğ¿À À§Ä¡¸¦ ³Ñ¾î°¬À» ¶§
+    // ì¬ìƒ ì¤‘ì´ê³  ìŠ¤í¬ë¡¤ì´ ë¹„ë””ì˜¤ ìœ„ì¹˜ë¥¼ ë„˜ì–´ê°”ì„ ë•Œ
     if (rect.top <= 0 && isPlaying) {
         videoContainer.style.position = 'fixed';
         videoContainer.style.top = '0';
         videoContainer.style.width = wrapper.offsetWidth + 'px';
         wrapper.style.height = videoContainer.offsetHeight + 'px';
     } else {
-        // ±× ¿ÜÀÇ °æ¿ì ±âº» À§Ä¡·Î
+        // ê·¸ ì™¸ì˜ ê²½ìš° ê¸°ë³¸ ìœ„ì¹˜ë¡œ
         videoContainer.style.position = 'relative';
         videoContainer.style.top = 'auto';
         videoContainer.style.width = '100%';
