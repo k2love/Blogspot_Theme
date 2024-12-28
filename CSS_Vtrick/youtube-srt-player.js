@@ -1,38 +1,40 @@
 /**
  * YouTube SRT Player Library
- * 유튜브 영상과 SRT 자막을 동기화하여 표시하는 플레이어
- * 영상 재생 시 스크롤에 따라 화면 상단에 고정되는 기능 포함
+ * 유튜브 영상과 자막을 동기화하여 표시하는 플레이어
+ * 스크롤 시 영상 고정 기능 포함
  */
 
 class YouTubeSRTPlayer {
     constructor() {
+        // 클래스 속성 초기화
         this.player = null;
         this.isPlaying = false;
         this.subtitles = [];
         this.subtitleUpdateInterval = null;
-        
-        // 이벤트 바인딩
-        this.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+        this.initialized = false;
+
+        // 메서드 바인딩
         this.handleScroll = this.handleScroll.bind(this);
-        
+        this.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady.bind(this);
+
         // 스크롤 이벤트 리스너 등록
         window.addEventListener('scroll', this.handleScroll);
-        
-        // YouTube API 준비 완료 시 호출될 전역 함수 설정
-        window.onYouTubeIframeAPIReady = () => {
-            console.log("YouTube API is ready");
-            this.onYouTubeIframeAPIReady();
-        };
 
-        // YouTube API 로드
+        // YouTube API 준비 완료 시 호출될 전역 함수 설정
+        window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady;
+
+        // API 로드 시작
         this.loadYouTubeAPI();
     }
 
     /**
-     * YouTube API 스크립트 로드
+     * YouTube IFrame API 스크립트 로드
      */
     loadYouTubeAPI() {
-        console.log("Loading YouTube API...");
+        if (document.querySelector('script[src*="iframe_api"]')) {
+            return; // 이미 로드된 경우 스킵
+        }
+
         const tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         const firstScriptTag = document.getElementsByTagName('script')[0];
@@ -41,104 +43,132 @@ class YouTubeSRTPlayer {
 
     /**
      * 플레이어 초기화
-     * @param {string} videoId - YouTube 비디오 ID
-     * @param {string} srtUrl - 자막 파일 URL
      */
     initialize(videoId, srtUrl) {
-        console.log("Initializing player...", { videoId, srtUrl });
+        if (this.initialized) {
+            console.warn('Player already initialized');
+            return;
+        }
+
+        if (!videoId || !srtUrl) {
+            console.error('Missing required parameters:', { videoId, srtUrl });
+            return;
+        }
+
+        // YT API 준비 확인
         if (typeof YT !== 'undefined' && YT.Player) {
-            this.createPlayer(videoId, srtUrl);
+            this.setupPlayer(videoId, srtUrl);
         } else {
-            console.log("YouTube API not ready, retrying in 100ms...");
             setTimeout(() => this.initialize(videoId, srtUrl), 100);
         }
     }
 
     /**
-     * YouTube 플레이어 생성
+     * 플레이어 설정
      */
-createPlayer(videoId, srtUrl) {
-    const playerDiv = document.getElementById('player');
-    if (!playerDiv) {
-        console.error('Player element not found');
-        return;
+    setupPlayer(videoId, srtUrl) {
+        const playerElement = document.getElementById('player');
+        if (!playerElement) {
+            console.error('Player element not found');
+            return;
+        }
+
+        // iframe이 이미 존재하는 경우
+        if (playerElement.tagName === 'IFRAME') {
+            this.player = new YT.Player(playerElement);
+            this.onPlayerReady(srtUrl);
+            return;
+        }
+
+        // 새 플레이어 생성
+        this.player = new YT.Player('player', {
+            videoId: videoId,
+            playerVars: {
+                enablejsapi: 1,
+                origin: window.location.origin,
+                autoplay: 0,
+                controls: 1,
+                playsinline: 1,
+                modestbranding: 1,
+                rel: 0
+            },
+            events: {
+                onReady: () => this.onPlayerReady(srtUrl),
+                onStateChange: this.onPlayerStateChange.bind(this),
+                onError: (event) => {
+                    const errors = {
+                        2: '매개변수가 유효하지 않습니다',
+                        5: 'HTML5 플레이어 오류',
+                        100: '요청한 비디오를 찾을 수 없습니다',
+                        101: '동영상 소유자가 웹사이트에서의 재생을 허용하지 않습니다',
+                        150: '동영상 소유자가 웹사이트에서의 재생을 허용하지 않습니다'
+                    };
+                    console.error('Player Error:', errors[event.data] || '알 수 없는 오류');
+                }
+            }
+        });
     }
 
-    // wrapper 크기 확인
-    const wrapper = playerDiv.closest('.video-wrapper');
-    const wrapperRect = wrapper ? wrapper.getBoundingClientRect() : null;
-    console.log('Wrapper dimensions:', wrapperRect);
-
-    this.player = new YT.Player('player', {
-        videoId: videoId,
-        playerVars: {
-            'host': 'https://www.youtube.com',
-            'origin': window.location.origin,
-            'enablejsapi': 1,
-            'autoplay': 0,
-            'controls': 1,
-            'playsinline': 1,
-            'modestbranding': 1,
-            'rel': 0,
-            'showinfo': 0,
-            'widget_referrer': window.location.href
-        },
-        events: {
-            'onReady': (event) => {
-                console.log('Player iframe created:', event.target.getIframe());
-                this.onPlayerReady(srtUrl);
-            },
-            'onStateChange': (event) => this.onPlayerStateChange(event),
-            'onError': (event) => console.error("Player error:", event.data)
-        }
-    });
-}
-
     /**
-     * SRT 파일 파싱
+     * SRT 파싱
      */
-    parseSRT(srtContent) {
-        const normalizedContent = srtContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-        const entries = normalizedContent.trim().split('\n\n');
-        
+    parseSRT(content) {
+        if (!content) return [];
+
+        const entries = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim().split('\n\n');
         return entries.map(entry => {
             const lines = entry.trim().split('\n');
             if (lines.length < 3) return null;
 
-            const timeCode = lines[1].trim();
-            const [startTime, endTime] = timeCode.split(' --> ').map(timeStr => {
-                const [time, ms] = timeStr.trim().split(',');
-                const [hours, minutes, seconds] = time.split(':').map(Number);
-                return (hours * 3600000 + minutes * 60000 + seconds * 1000 + parseInt(ms));
+            const [time, ms] = lines[1].split(' --> ').map(timeStr => {
+                const [t, m] = timeStr.trim().split(',');
+                const [h, mm, s] = t.split(':').map(Number);
+                return h * 3600000 + mm * 60000 + s * 1000 + parseInt(m);
             });
 
             return {
                 index: parseInt(lines[0], 10),
-                startTime,
-                endTime,
+                startTime: time,
+                endTime: ms,
                 text: lines.slice(2).join('\n').trim()
             };
-        }).filter(entry => entry !== null);
+        }).filter(Boolean);
     }
 
     /**
-     * 자막 로드 및 파싱
+     * 자막 로드
      */
     async loadSubtitles(srtUrl) {
         try {
-            console.log("Loading subtitles from:", srtUrl);
             const response = await fetch(srtUrl);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
+            const content = await response.text();
+            this.subtitles = this.parseSRT(content);
+            
+            if (this.subtitleUpdateInterval) {
+                clearInterval(this.subtitleUpdateInterval);
             }
-            const srtContent = await response.text();
-            console.log("Subtitles loaded, parsing...");
-            this.subtitles = this.parseSRT(srtContent);
-            console.log("Subtitles parsed successfully");
-            return this.subtitles;
+            this.subtitleUpdateInterval = setInterval(() => this.updateSubtitle(), 100);
         } catch (error) {
-            console.error('자막 로드 에러:', error);
-            throw error;
+            console.error('Failed to load subtitles:', error);
+        }
+    }
+
+    /**
+     * 자막 업데이트
+     */
+    updateSubtitle() {
+        if (!this.player?.getCurrentTime) return;
+
+        const time = this.player.getCurrentTime() * 1000;
+        const current = this.subtitles.find(sub => 
+            time >= sub.startTime && time <= sub.endTime
+        );
+
+        const element = document.getElementById('subtitle-text');
+        if (element) {
+            element.textContent = current ? current.text : '';
         }
     }
 
@@ -146,12 +176,8 @@ createPlayer(videoId, srtUrl) {
      * 플레이어 준비 완료 핸들러
      */
     onPlayerReady(srtUrl) {
-        this.loadSubtitles(srtUrl).then(() => {
-            if (this.subtitleUpdateInterval) {
-                clearInterval(this.subtitleUpdateInterval);
-            }
-            this.subtitleUpdateInterval = setInterval(() => this.updateSubtitle(), 100);
-        });
+        this.loadSubtitles(srtUrl);
+        this.initialized = true;
     }
 
     /**
@@ -159,46 +185,28 @@ createPlayer(videoId, srtUrl) {
      */
     onPlayerStateChange(event) {
         this.isPlaying = (event.data === YT.PlayerState.PLAYING);
-        console.log("Player state changed:", this.isPlaying ? "playing" : "paused");
         window.dispatchEvent(new Event('scroll'));
     }
 
     /**
-     * 자막 업데이트
-     */
-    updateSubtitle() {
-        if (!this.player || !this.player.getCurrentTime) return;
-
-        const currentTime = this.player.getCurrentTime() * 1000;
-        const currentSubtitle = this.subtitles.find(subtitle =>
-            currentTime >= subtitle.startTime && currentTime <= subtitle.endTime
-        );
-
-        const subtitleText = document.getElementById('subtitle-text');
-        if (subtitleText) {
-            subtitleText.textContent = currentSubtitle ? currentSubtitle.text : '';
-        }
-    }
-
-    /**
-     * 스크롤 이벤트 핸들러
+     * 스크롤 핸들러
      */
     handleScroll() {
-        const videoContainer = document.querySelector('.video-container');
+        const container = document.querySelector('.video-container');
         const wrapper = document.querySelector('.sticky-wrapper');
-        if (!videoContainer || !wrapper) return;
+        if (!container || !wrapper) return;
 
         const rect = wrapper.getBoundingClientRect();
         
         if (rect.top <= 0 && this.isPlaying) {
-            videoContainer.style.position = 'fixed';
-            videoContainer.style.top = '0';
-            videoContainer.style.width = wrapper.offsetWidth + 'px';
-            wrapper.style.height = videoContainer.offsetHeight + 'px';
+            container.style.position = 'fixed';
+            container.style.top = '0';
+            container.style.width = `${wrapper.offsetWidth}px`;
+            wrapper.style.height = `${container.offsetHeight}px`;
         } else {
-            videoContainer.style.position = 'relative';
-            videoContainer.style.top = 'auto';
-            videoContainer.style.width = '100%';
+            container.style.position = 'relative';
+            container.style.top = 'auto';
+            container.style.width = '100%';
             wrapper.style.height = 'auto';
         }
     }
@@ -208,19 +216,15 @@ createPlayer(videoId, srtUrl) {
      */
     onYouTubeIframeAPIReady() {
         if (window.YOUTUBE_CONFIG) {
-            console.log("Initializing with config:", window.YOUTUBE_CONFIG);
             this.initialize(
                 window.YOUTUBE_CONFIG.videoId,
                 window.YOUTUBE_CONFIG.srtUrl
             );
-        } else {
-            console.error("YOUTUBE_CONFIG not found");
         }
     }
 }
 
-// 플레이어 인스턴스 생성
-window.addEventListener('DOMContentLoaded', () => {
-    console.log("DOM loaded, creating YouTube SRT Player instance");
+// DOM 로드 완료 시 인스턴스 생성
+document.addEventListener('DOMContentLoaded', () => {
     window.youtubeSRTPlayer = new YouTubeSRTPlayer();
 });
