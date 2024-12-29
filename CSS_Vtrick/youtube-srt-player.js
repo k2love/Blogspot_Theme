@@ -61,9 +61,11 @@ async function loadSubtitles(subtitleUrl) {
 }
 
 // YouTube IFrame API 스크립트 로드
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
+document.addEventListener('DOMContentLoaded', function() {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.getElementsByTagName('script')[0].parentNode.insertBefore(tag, document.getElementsByTagName('script')[0]);
+});
 
 /**
  * YouTube IFrame API 준비 완료 시 호출되는 함수
