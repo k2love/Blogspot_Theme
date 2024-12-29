@@ -44,6 +44,7 @@ const parseSRT = (srtContent) => {
 let player;
 let subtitles = [];
 let isPlaying = false;
+let subtitleTimer; // 추가: setInterval 중복 방지를 위한 변수
 
 /**
  * SRT 자막 파일을 로드하고 파싱하는 함수
@@ -52,8 +53,10 @@ let isPlaying = false;
  */
 async function loadSubtitles(subtitleUrl) {
     try {
+        console.log("Loading subtitles from:", subtitleUrl); // 디버깅 로그 추가
         const response = await fetch(subtitleUrl);
         const srtContent = await response.text();
+        console.log("Subtitles loaded successfully"); // 성공 메시지 추가
         return parseSRT(srtContent);
     } catch (error) {
         console.error('자막을 불러오는데 실패했습니다:', error);
@@ -80,6 +83,8 @@ function onYouTubeIframeAPIReady() {
         return;
     }
 
+    console.log("Initializing player with videoId:", videoId); // 디버깅 로그 추가
+
     player = new YT.Player('player', {
         videoId: videoId,
         events: {
@@ -96,6 +101,8 @@ function onYouTubeIframeAPIReady() {
 function onPlayerReady(event) {
     const playerContainer = document.getElementById('player-container');
     const subtitleUrl = playerContainer?.getAttribute('data-subtitle-url');
+    console.log("플레이어 준비 완료");
+    console.log("플레이어 상태:", event);
 
     if (!subtitleUrl) {
         console.error('자막 URL이 제공되지 않았습니다.');
@@ -103,8 +110,14 @@ function onPlayerReady(event) {
     }
 
     loadSubtitles(subtitleUrl).then(loadedSubtitles => {
+        if (!loadedSubtitles || loadedSubtitles.length === 0) {
+            console.error('로드된 자막이 없습니다.');
+            return;
+        }
+
         subtitles = loadedSubtitles;
-        setInterval(updateSubtitle, 100);
+        if (subtitleTimer) clearInterval(subtitleTimer); // 중복 방지
+        subtitleTimer = setInterval(updateSubtitle, 100);
     });
 }
 
@@ -114,6 +127,7 @@ function onPlayerReady(event) {
  */
 function onPlayerStateChange(event) {
     isPlaying = (event.data === YT.PlayerState.PLAYING);
+    console.log("Player state changed:", event.data); // 디버깅 로그 추가
 }
 
 /**
