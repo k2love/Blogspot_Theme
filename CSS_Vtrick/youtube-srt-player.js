@@ -72,7 +72,16 @@ document.addEventListener('DOMContentLoaded', function() {
  * 플레이어 인스턴스 생성
  */
 function onYouTubeIframeAPIReady() {
+    const playerContainer = document.getElementById('player-container');
+    const videoId = playerContainer?.getAttribute('data-video-id');
+
+    if (!videoId) {
+        console.error('비디오 ID가 제공되지 않았습니다.');
+        return;
+    }
+
     player = new YT.Player('player', {
+        videoId: videoId,
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
