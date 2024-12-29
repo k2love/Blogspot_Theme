@@ -86,7 +86,7 @@ function onYouTubeIframeAPIReady() {
  */
 function onPlayerReady(event) {
     const playerContainer = document.getElementById('player-container');
-    const subtitleUrl = playerContainer.getAttribute('data-subtitle-url');
+    const subtitleUrl = playerContainer?.getAttribute('data-subtitle-url');
 
     if (!subtitleUrl) {
         console.error('자막 URL이 제공되지 않았습니다.');
@@ -133,6 +133,12 @@ function updateSubtitle() {
 window.addEventListener('scroll', function() {
     const videoContainer = document.querySelector('.video-container');
     const wrapper = document.querySelector('.sticky-wrapper');
+
+    if (!wrapper || !videoContainer) {
+        console.error("필요한 요소가 누락되었습니다. wrapper 또는 videoContainer를 확인하세요.");
+        return;
+    }
+
     const rect = wrapper.getBoundingClientRect();
 
     if (rect.top <= 0 && isPlaying) {
