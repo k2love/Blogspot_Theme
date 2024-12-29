@@ -78,19 +78,52 @@ function loadYouTubeAPI() {
 
 // YouTube 플레이어 초기화
 function initializeYouTubePlayer(videoId, srtUrl) {
+    console.log('Initializing YouTube player with video ID:', videoId);
+    
     window.onYouTubeIframeAPIReady = function() {
-        if (!initializeElements()) return;
+        console.log('YouTube IFrame API is ready');
+        if (!initializeElements()) {
+            console.error('Failed to initialize elements');
+            return;
+        }
         
         player = new YT.Player('player', {
             videoId: videoId,
+            playerVars: {
+                'autoplay': 0,
+                'controls': 1,
+                'rel': 0,
+                'showinfo': 0
+            },
             events: {
-                'onReady': () => onPlayerReady(srtUrl),
-                'onStateChange': onPlayerStateChange
+                'onReady': (event) => {
+                    console.log('Player is ready');
+                    onPlayerReady(event, srtUrl);
+                },
+                'onStateChange': (event) => {
+                    console.log('Player state changed:', event.data);
+                    onPlayerStateChange(event);
+                },
+                'onError': (event) => {
+                    console.error('Player error:', event.data);
+                }
             }
         });
     };
 
     loadYouTubeAPI();
+}
+
+// 플레이어 준비 완료 핸들러 수정
+function onPlayerReady(event, srtUrl) {
+    console.log('Loading subtitles from:', srtUrl);
+    loadSubtitles(srtUrl).then(loadedSubtitles => {
+        console.log('Subtitles loaded:', loadedSubtitles.length);
+        subtitles = loadedSubtitles;
+        setInterval(updateSubtitle, 100);
+    }).catch(error => {
+        console.error('Failed to load subtitles:', error);
+    });
 }
 
 // 플레이어 준비 완료 핸들러
