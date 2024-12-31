@@ -1,134 +1,183 @@
-/* Dark Mode */
+/* Dark Mode - Base Variables */
 html.is-dark {
- --body-bg-color: #1a1a1a;           /* 메인 배경색을 더 어둡게 */
- --body-bg: #1a1a1a none repeat fixed top left;
- --outer-bg: #202020;                /* 외부 배경 */
- --outer-mobile-bg: #202020;         /* 모바일에서의 외부 배경 */
- --content-bg: #2b2b2b;              /* 컨텐츠 영역 배경 */
- --widget-bg: #2b2b2b;               /* 위젯 배경 */
- --post-card-bg: #2b2b2b;            /* 포스트 카드 배경 *
+    /* 배경 색상 */
+    --body-bg-color: #1a1a1a;
+    --body-bg: #1a1a1a none repeat fixed top left;
+    --outer-bg: #202020;
+    --outer-mobile-bg: #202020;
+    --content-bg: #2b2b2b;
+    --widget-bg: #2b2b2b;
+    --post-card-bg: #2b2b2b;
 
- /* 기본 텍스트 컬러 */
- --text-color: #e4e6eb;
- --post-text-color: #e4e6eb;
- 
- /* 제목 관련 컬러 */
- --title-color: #f0f2f5;
- --h1-color: #f0f2f5;
- --h2-color: #e4e6eb;
- --h3-color: #dfe1e5; 
- --h4-color: #d8dadf;
- 
- /* 강조 텍스트 컬러 */
- --emphasis-color: #4e89e8;
- --strong-color: #ffffff;
- --mark-bg: #393e46;
- --mark-color: #85bdff;
+    /* 기본 텍스트 */
+    --text-color: #e4e6eb;
+    --post-text-color: #e4e6eb;
+
+    /* 제목 */
+    --title-color: #f0f2f5;
+    --h1-color: #f0f2f5;
+    --h2-color: #e4e6eb;
+    --h3-color: #dfe1e5;
+    --h4-color: #d8dadf;
+
+    /* 강조 텍스트 */
+    --emphasis-color: #4e89e8;
+    --strong-color: #ffffff;
+    --mark-bg: #393e46;
+    --mark-color: #85bdff;
+
+    /* 헤더 */
+    --header-bg: #242526;
+    --header-color: #f6f7f8;
+    --header-hover-color: #1A73E8;
+
+    /* 메뉴 */
+    --submenu-bg: #252525;
+    --submenu-color: #f6f7f8;
+    --submenu-hover-color: #1A73E8;
+    --megamenu-bg: #252525;
+    --megamenu-color: #f6f7f8;
+    --megamenu-hover-color: #1A73E8;
+    --mobilemenu-bg: #1b1b1b;
+    --mobilemenu-color: #f6f7f8;
+    --mobilemenu-hover-color: #1A73E8;
+
+    /* 푸터 */
+    --footer-bg: #202020;
+    --footer-color: $(footer.color);
+    --footer-hover-color: #1A73E8;
+    --footerbar-bg: #202020;
+    --footerbar-color: #f6f7f8;
+    --footerbar-hover-color: #1A73E8;
+
+    /* 쿠키 및 버튼 */
+    --cookie-bg: #202020;
+    --cookie-color: #b4b6ba;
+    --button-bg: $(button.bg);
+    --button-color: $(button.color);
+    --button-hover-bg: $(button.hover.bg);
+    --button-hover-color: $(button.hover.color);
+    --secondary-button-bg: #3A3B3C;
+    --secondary-button-hover-bg: #505151;
+    --secondary-button-color: #E4E6EB;
+
+    /* 댓글 */
+    --secondary-text: #65676B;
+    --comment-color: #E4E6EB;
+    --comment-bg-color: #3A3B3C;
+    --comment-action-color: #B0B3B8;
 }
 
-/* 다크모드 텍스트 스타일 */
+/* Dark Mode - Style Rules */
 html.is-dark .post-body {
- color: var(--post-text-color);
+    color: var(--post-text-color);
 }
 
 html.is-dark h1 {
- color: var(--h1-color);
- font-weight: 700;
- letter-spacing: -0.02em;
+    color: var(--h1-color);
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 html.is-dark h2 {
- color: var(--h2-color);
- font-weight: 600;
- border-bottom: 1px solid var(--border-color);
- padding-bottom: 0.3em;
+    color: var(--h2-color);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.3em;
 }
 
 html.is-dark h3 {
- color: var(--h3-color);
- font-weight: 600;
+    color: var(--h3-color);
+    font-weight: 600;
 }
 
 html.is-dark h4 {
- color: var(--h4-color);
- font-weight: 500;
+    color: var(--h4-color);
+    font-weight: 500;
 }
 
-/* Important & Tip 스타일 */
+/* Important & Tip Styles */
 html.is-dark .important {
- background-color: #2a2a2a;
- border-color: #404040;
- color: #cccccc;
+    background-color: #2a2a2a;
+    border-color: #404040;
+    color: #cccccc;
 }
 
 html.is-dark .important::before {
- color: #dddddd;
+    color: #dddddd;
 }
 
 html.is-dark .important ul li {
- color: #cccccc;
+    color: #cccccc;
 }
 
 html.is-dark .tip {
- background-color: #2a2a2a;
- border-color: #404040;
- color: var(--text-color);
+    background-color: #2a2a2a;
+    border-color: #404040;
+    color: var(--text-color);
 }
 
 html.is-dark .tip::before {
- color: #ffffff;
+    color: #ffffff;
 }
 
 /* 강조 스타일 */
 html.is-dark strong,
 html.is-dark .important strong,
 html.is-dark .tip strong {
- color: #ffffff;
- font-weight: bold;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 /* 코드 스타일 */
 html.is-dark strong > code {
- background-color: #2a2a2a;
- color: #dddddd;
+    background-color: #2a2a2a;
+    color: #dddddd;
 }
 
 html.is-dark pre,
 html.is-dark code {
- background-color: #202020;
- color: #cccccc;
+    background-color: #202020;
+    color: #cccccc;
 }
 
 html.is-dark .post-body code:not(pre[class*=language-]>code) {
- padding: .1rem .3rem .2rem;
- border-radius: .2rem;
- background: #202020;
- color: #cccccc;
- font-family: monospace;
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
+    background: #202020;
+    color: #cccccc;
+    font-family: monospace;
 }
 
 html.is-dark li code {
- background-color: #2a2a2a;
- color: #dddddd;
- padding: 0.2em 0.4em;
- border-radius: 3px;
+    background-color: #2a2a2a;
+    color: #dddddd;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
 }
 
 /* 인용구 스타일 */
 html.is-dark blockquote {
- background-color: #1a1a1a;
- border-left: 4px solid #2a2a2a;
- color: #cccccc;
+    background-color: #1a1a1a;
+    border-left: 4px solid #2a2a2a;
+    color: #cccccc;
 }
 
 html.is-dark blockquote p {
- color: #dddddd;
+    color: #dddddd;
 }
 
 html.is-dark blockquote code {
- background-color: #333333;
- color: #ff9776;
- padding: .1rem .3rem .2rem;
- border-radius: .2rem;
+    background-color: #333333;
+    color: #ff9776;
+    padding: .1rem .3rem .2rem;
+    border-radius: .2rem;
+}
 
+/* RTL Support */
+html.rtl {
+    --body-font: 'Tajawal', Arial, sans-serif;
+    --menu-font: 'Tajawal', Arial, sans-serif;
+    --title-font: 'Tajawal', Arial, sans-serif;
+    --text-font: 'Tajawal', Arial, sans-serif;
 }
