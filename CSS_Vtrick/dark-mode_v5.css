@@ -1,3 +1,21 @@
+/* Dark mode colors */
+.is-dark {
+  --title-color: #f6f7f8;
+  --title-hover-color: #1A73E8;
+  --meta-color: #aaaaaa;
+  --text-color: #c4c4c4;
+  --widget-title-color: #f6f7f8;
+  --post-title-color: #f6f7f8;
+  --post-title-hover-color: #1A73E8;
+  --post-text-color: #cccccc;
+  
+  /* Additional dark mode styles */
+  --content-bg: #242526;
+  --outer-bg: #18191a;
+  --rgba-gray: #3A3B3C;
+  --border-color: rgba(255,255,255,0.1);
+}
+
 /* Dark Mode - Base Variables */
 html.is-dark {
     /* 배경 색상 */
