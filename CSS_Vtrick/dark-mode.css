@@ -1,90 +1,111 @@
-/* 다크모드 스타일 */
-html.is-dark body .important,
-html.is-dark .post-body .important,
-html.is-dark article .important {
-    background-color: #2a2a2a;
-    border-color: #404040;
-    color: #cccccc;
+/* Dark Mode */
+html.is-dark {
+ /* 기본 텍스트 컬러 */
+ --text-color: #e4e6eb;
+ --post-text-color: #e4e6eb;
+
+/* 다크모드 텍스트 스타일 */
+html.is-dark .post-body {
+ color: var(--post-text-color);
 }
 
-html.is-dark body .important::before,
-html.is-dark .post-body .important::before,
-html.is-dark article .important::before {
-    color: #dddddd;
+html.is-dark h1 {
+ color: var(--h1-color);
+ font-weight: 700;
+ letter-spacing: -0.02em;
 }
 
-html.is-dark body .important ul li,
-html.is-dark .post-body .important ul li,
-html.is-dark article .important ul li {
-    color: #cccccc;
+html.is-dark h2 {
+ color: var(--h2-color);
+ font-weight: 600;
+ border-bottom: 1px solid var(--border-color);
+ padding-bottom: 0.3em;
 }
 
-html.is-dark body .important strong,
-html.is-dark .post-body .important strong,
-html.is-dark article .important strong {
-    color: #ffffff;
-    font-weight: bold;
+html.is-dark h3 {
+ color: var(--h3-color);
+ font-weight: 600;
+}
+
+html.is-dark h4 {
+ color: var(--h4-color);
+ font-weight: 500;
+}
+
+/* Important & Tip 스타일 */
+html.is-dark .important {
+ background-color: #2a2a2a;
+ border-color: #404040;
+ color: #cccccc;
+}
+
+html.is-dark .important::before {
+ color: #dddddd;
+}
+
+html.is-dark .important ul li {
+ color: #cccccc;
 }
 
 html.is-dark .tip {
-    background-color: #2a2a2a;
-    border-color: #404040;
-    color: var(--text-color); /* 정의되어 있는지 확인 필요 */
-}
-
-html.is-dark .tip strong {
-    color: #ffffff;
-    font-weight: bold;
+ background-color: #2a2a2a;
+ border-color: #404040;
+ color: var(--text-color);
 }
 
 html.is-dark .tip::before {
-    color: #ffffff;
+ color: #ffffff;
 }
 
-html.is-dark strong {
-    color: #ffffff;
-    font-weight: bold;
+/* 강조 스타일 */
+html.is-dark strong,
+html.is-dark .important strong,
+html.is-dark .tip strong {
+ color: #ffffff;
+ font-weight: bold;
 }
 
+/* 코드 스타일 */
 html.is-dark strong > code {
-    background-color: #2a2a2a;
-    color: #dddddd;
+ background-color: #2a2a2a;
+ color: #dddddd;
 }
 
 html.is-dark pre,
 html.is-dark code {
-    background-color: #202020;
-    color: #cccccc;
+ background-color: #202020;
+ color: #cccccc;
 }
 
 html.is-dark .post-body code:not(pre[class*=language-]>code) {
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
-    background: #202020;
-    color: #cccccc;
-    font-family: monospace;
+ padding: .1rem .3rem .2rem;
+ border-radius: .2rem;
+ background: #202020;
+ color: #cccccc;
+ font-family: monospace;
 }
 
 html.is-dark li code {
-    background-color: #2a2a2a;
-    color: #dddddd;
-    padding: 0.2em 0.4em;
-    border-radius: 3px;
+ background-color: #2a2a2a;
+ color: #dddddd;
+ padding: 0.2em 0.4em;
+ border-radius: 3px;
 }
 
+/* 인용구 스타일 */
 html.is-dark blockquote {
-    background-color: #1a1a1a;
-    border-left: 4px solid #2a2a2a;
-    color: #cccccc;
+ background-color: #1a1a1a;
+ border-left: 4px solid #2a2a2a;
+ color: #cccccc;
 }
 
 html.is-dark blockquote p {
-    color: #dddddd;
+ color: #dddddd;
 }
 
 html.is-dark blockquote code {
-    background-color: #333333;
-    color: #ff9776;
-    padding: .1rem .3rem .2rem;
-    border-radius: .2rem;
+ background-color: #333333;
+ color: #ff9776;
+ padding: .1rem .3rem .2rem;
+ border-radius: .2rem;
 }
