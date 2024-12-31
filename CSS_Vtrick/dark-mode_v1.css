@@ -3,6 +3,20 @@ html.is-dark {
  /* 기본 텍스트 컬러 */
  --text-color: #e4e6eb;
  --post-text-color: #e4e6eb;
+ 
+ /* 제목 관련 컬러 */
+ --title-color: #f0f2f5;
+ --h1-color: #f0f2f5;
+ --h2-color: #e4e6eb;
+ --h3-color: #dfe1e5; 
+ --h4-color: #d8dadf;
+ 
+ /* 강조 텍스트 컬러 */
+ --emphasis-color: #4e89e8;
+ --strong-color: #ffffff;
+ --mark-bg: #393e46;
+ --mark-color: #85bdff;
+}
 
 /* 다크모드 텍스트 스타일 */
 html.is-dark .post-body {
@@ -108,4 +122,5 @@ html.is-dark blockquote code {
  color: #ff9776;
  padding: .1rem .3rem .2rem;
  border-radius: .2rem;
+
 }
