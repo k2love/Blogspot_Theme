@@ -1,5 +1,13 @@
 /* Dark Mode */
 html.is-dark {
+ --body-bg-color: #1a1a1a;           /* 메인 배경색을 더 어둡게 */
+ --body-bg: #1a1a1a none repeat fixed top left;
+ --outer-bg: #202020;                /* 외부 배경 */
+ --outer-mobile-bg: #202020;         /* 모바일에서의 외부 배경 */
+ --content-bg: #2b2b2b;              /* 컨텐츠 영역 배경 */
+ --widget-bg: #2b2b2b;               /* 위젯 배경 */
+ --post-card-bg: #2b2b2b;            /* 포스트 카드 배경 *
+
  /* 기본 텍스트 컬러 */
  --text-color: #e4e6eb;
  --post-text-color: #e4e6eb;
