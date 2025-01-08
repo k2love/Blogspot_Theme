@@ -221,21 +221,25 @@
     // 그 다음 포지셔닝 클래스 적용
         if (isPlaying) {
             if (rect.top < 0) {
-                videoContainer.classList.add('fixed');
-                videoContainer.classList.remove('fixed-bottom');
-            }
-            else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
-                videoContainer.classList.remove('fixed');
-                videoContainer.classList.add('fixed-bottom');
-            }
-            else {
-                videoContainer.classList.remove('fixed');
-                videoContainer.classList.remove('fixed-bottom');
-            }
-        } else {
+            // CSS 변수로 스크롤 오프셋 설정
+            videoContainer.style.setProperty('--scroll-offset', `${-rect.top}px`);
+            videoContainer.classList.add('fixed');
+            videoContainer.classList.remove('fixed-bottom');
+        }
+        else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
+            videoContainer.style.setProperty('--scroll-offset', `${windowHeight - videoHeight - rect.top}px`);
+            videoContainer.classList.remove('fixed');
+            videoContainer.classList.add('fixed-bottom');
+        }
+        else {
+            videoContainer.style.setProperty('--scroll-offset', '0px');
             videoContainer.classList.remove('fixed');
             videoContainer.classList.remove('fixed-bottom');
         }
+    } else {
+        videoContainer.style.setProperty('--scroll-offset', '0px');
+        videoContainer.classList.remove('fixed');
+        videoContainer.classList.remove('fixed-bottom');
     }
 
     // 자막 토글 기능 초기화
@@ -283,9 +287,7 @@
             });
 
             // 스크롤 및 리사이즈 이벤트 리스너
-            window.addEventListener('scroll', _.throttle(() => {
-                updateVideoPosition();
-            }, 100));
+            window.addEventListener('scroll', updateVideoPosition);
             window.addEventListener('resize', () => {
                 const videoContainer = safeQuerySelector('.video-container');
                 if (!videoContainer) return;
