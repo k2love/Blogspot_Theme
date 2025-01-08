@@ -1,11 +1,5 @@
-// 자막 로딩 및 YouTube 비디오 스크립트
+// 개선된 자막 로딩 및 YouTube 비디오 스크립트
 (function() {
-    // Lodash 의존성 체크
-    if (typeof _ === 'undefined') {
-        console.error('Lodash is required for this script to work properly');
-        return;
-    }
-
     // 전역 변수 선언 (let으로 변경)
     let player;
     let subtitlesKo = [];
@@ -214,44 +208,35 @@
         const rect = wrapper.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         const videoHeight = videoContainer.offsetHeight;
-        const viewportWidth = window.innerWidth;
         
     // 먼저 placeholder 높이를 설정
-    if (isPlaying) {
-        placeholder.style.height = `${videoHeight}px`;
-        
-        // 반응형 크기 조절 적용
-        if (viewportWidth < 768) {  // 모바일
-            videoContainer.style.maxWidth = '100%';
-        } else if (viewportWidth < 1024) {  // 태블릿
-            videoContainer.style.maxWidth = '85%';
-        } else {  // 데스크톱
+        if (isPlaying) {
+            placeholder.style.height = `${videoHeight}px`;
             videoContainer.style.maxWidth = `${wrapper.offsetWidth}px`;
+        } else {
+            placeholder.style.height = '0';
+            videoContainer.style.maxWidth = '';
         }
-    } else {
-        placeholder.style.height = '0';
-        videoContainer.style.maxWidth = '';
-    }
 
-    // 포지셔닝 클래스 적용
-    if (isPlaying) {
-        if (rect.top < 0) {
-            videoContainer.classList.add('fixed');
+    // 그 다음 포지셔닝 클래스 적용
+        if (isPlaying) {
+            if (rect.top < 0) {
+                videoContainer.classList.add('fixed');
+                videoContainer.classList.remove('fixed-bottom');
+            }
+            else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
+                videoContainer.classList.remove('fixed');
+                videoContainer.classList.add('fixed-bottom');
+            }
+            else {
+                videoContainer.classList.remove('fixed');
+                videoContainer.classList.remove('fixed-bottom');
+            }
+        } else {
+            videoContainer.classList.remove('fixed');
             videoContainer.classList.remove('fixed-bottom');
         }
-        else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
-            videoContainer.classList.remove('fixed');
-            videoContainer.classList.add('fixed-bottom');
-        }
-        else {
-            videoContainer.classList.remove('fixed');
-            videoContainer.classList.remove('fixed-bottom');
-        }
-    } else {
-        videoContainer.classList.remove('fixed');
-        videoContainer.classList.remove('fixed-bottom');
     }
-}
 
     // 자막 토글 기능 초기화
     function initializeSubtitleToggles() {
@@ -283,11 +268,13 @@
         });
     }
 
-    // 메인 초기화 함수 수정 - throttle 적용
+    // 메인 초기화 함수
     async function initializePlayer() {
         try {
+            // YouTube API 로드
             await loadYouTubeAPI();
 
+            // YouTube 플레이어 생성
             player = new YT.Player('player', {
                 events: {
                     'onReady': onPlayerReady,
@@ -295,9 +282,22 @@
                 }
             });
 
-            // throttle 적용된 이벤트 리스너
-            window.addEventListener('scroll', _.throttle(updateVideoPosition, 100));
-            window.addEventListener('resize', _.throttle(updateVideoPosition, 100));
+            // 스크롤 및 리사이즈 이벤트 리스너
+            window.addEventListener('scroll', _.throttle(() => {
+                updateVideoPosition();
+            }, 100));
+            window.addEventListener('resize', () => {
+                const videoContainer = safeQuerySelector('.video-container');
+                if (!videoContainer) return;
+                
+                const wrapper = videoContainer.closest('.sticky-wrapper');
+                if (!wrapper) return;
+                
+                if (videoContainer.classList.contains('fixed') || 
+                    videoContainer.classList.contains('fixed-bottom')) {
+                    videoContainer.style.maxWidth = `${wrapper.offsetWidth}px`;
+                }
+            });
         } catch (error) {
             console.error('플레이어 초기화 중 오류 발생:', error);
         }
