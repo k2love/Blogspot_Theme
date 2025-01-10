@@ -6,7 +6,9 @@
     let subtitlesEn = [];
     let subtitlesExtra = [];
     let isPlaying = false;
-    
+    let previousTime = 0;
+    let isTimeSeek = false;
+
     // 안전한 요소 선택 함수
     function safeQuerySelector(selector) {
         const element = document.querySelector(selector);
@@ -176,7 +178,7 @@
         });
     }
 
-    // 플레이어 준비 핸들러 개선
+    // 플레이어 준비 핸들러
     async function onPlayerReady(event) {
         try {
             await loadSubtitles();
@@ -192,11 +194,28 @@
 
     // 플레이어 상태 변경 핸들러
     function onPlayerStateChange(event) {
-        isPlaying = (event.data === YT.PlayerState.PLAYING);
-        updateVideoPosition();
+        const currentTime = player.getCurrentTime();
+        const timeDiff = Math.abs(currentTime - previousTime);
+    
+        // 시간 이동 여부 확인 (0.5초 이상 차이나면 시간 이동으로 간주)
+        isTimeSeek = (timeDiff >= 0.5);
+    
+        // 일시정지 상태이고 시간 이동이 아닌 경우에만 isPlaying을 false로 설정
+        if (event.data === YT.PlayerState.PAUSED && !isTimeSeek) {
+            isPlaying = false;
+            updateVideoPosition();
+        } 
+        // 재생 상태이거나 시간 이동인 경우 isPlaying을 true로 유지
+        else if (event.data === YT.PlayerState.PLAYING) {
+            isPlaying = true;
+            updateVideoPosition();
+        }
+    
+        // 현재 시간을 이전 시간으로 저장
+        previousTime = currentTime;
     }
 
-    // 비디오 위치 업데이트 함수
+    // 비디오 위치 업데이트 함수 수정
     function updateVideoPosition() {
         const elements = initializeElements();
         if (!elements) return;
@@ -208,38 +227,39 @@
         const rect = wrapper.getBoundingClientRect();
         const windowHeight = window.innerHeight;
         const videoHeight = videoContainer.offsetHeight;
-        
-    // 먼저 placeholder 높이를 설정
+
+        // 시간 이동 중에는 position 변경하지 않음
+        if (isTimeSeek) {
+            return;
+        }
+    
+        // placeholder 높이 설정
         if (isPlaying) {
             placeholder.style.height = `${videoHeight}px`;
             videoContainer.style.maxWidth = `${wrapper.offsetWidth}px`;
         } else {
+            placeholder.style.transition = 'height 0.3s ease';
             placeholder.style.height = '0';
             videoContainer.style.maxWidth = '';
         }
 
-    // 그 다음 포지셔닝 클래스 적용
+        // 포지셔닝 클래스 적용
         if (isPlaying) {
             if (rect.top < 0) {
-            // CSS 변수로 스크롤 오프셋 설정
-            videoContainer.style.setProperty('--scroll-offset', `${-rect.top}px`);
-            videoContainer.classList.add('fixed');
+                videoContainer.classList.add('fixed');
+                videoContainer.classList.remove('fixed-bottom');
+            } else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
+                videoContainer.classList.remove('fixed');
+                videoContainer.classList.add('fixed-bottom');
+            } else {
+                videoContainer.classList.remove('fixed');
+                videoContainer.classList.remove('fixed-bottom');
+            }
+        } else {
+            videoContainer.style.transition = 'all 0.3s ease';
+            videoContainer.classList.remove('fixed');
             videoContainer.classList.remove('fixed-bottom');
         }
-        else if (windowHeight - rect.top <= videoHeight && rect.top > 0) {
-            videoContainer.style.setProperty('--scroll-offset', `${windowHeight - videoHeight - rect.top}px`);
-            videoContainer.classList.remove('fixed');
-            videoContainer.classList.add('fixed-bottom');
-        }
-        else {
-            videoContainer.style.setProperty('--scroll-offset', '0px');
-            videoContainer.classList.remove('fixed');
-            videoContainer.classList.remove('fixed-bottom');
-        }
-    } else {
-        videoContainer.style.setProperty('--scroll-offset', '0px');
-        videoContainer.classList.remove('fixed');
-        videoContainer.classList.remove('fixed-bottom');
     }
 
     // 자막 토글 기능 초기화
