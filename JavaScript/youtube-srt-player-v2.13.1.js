@@ -376,7 +376,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 100;
+        z-index: 10;
     }
 
     .subtitle-area > div {
