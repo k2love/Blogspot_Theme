@@ -376,7 +376,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 100;
+        z-index: 10;
         pointer-events: none;
     }
 
@@ -387,7 +387,6 @@
         cursor: pointer;
         transition: opacity 0.2s ease;
     }
-
     .subtitle-area > div:hover,
     .subtitle-overlay > div:hover {
         opacity: 0.8;
