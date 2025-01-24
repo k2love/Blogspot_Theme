@@ -170,6 +170,50 @@
         });
     }
 
+    function getVideoIdFromUrl(url) {
+        try {
+            const urlParams = new URLSearchParams(new URL(url).search);
+            const siParam = urlParams.get('si');
+            if (!siParam) return null;
+            return siParam.split('_')[0];
+        } catch (error) {
+            console.error('URL 파싱 에러:', error);
+            return null;
+        }
+    }
+    
+    function onYouTubeIframeAPIReady() {
+        const iframe = document.getElementById('player');
+        const videoId = getVideoIdFromUrl(iframe.src);
+        
+        if (!videoId) {
+            console.error('비디오 ID를 찾을 수 없습니다.');
+            return;
+        }
+    
+        player = new YT.Player('player', {
+            height: '100%',
+            width: '100%',
+            videoId: videoId,
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+
+        const playerElement = document.getElementById('player');
+        playerElement.style.position = 'relative';
+        
+        const subtitleContainer = document.getElementById('subtitle-text-ko');
+        if (subtitleContainer) {
+            subtitleContainer.style.position = 'absolute';
+            subtitleContainer.style.top = '50%';
+            subtitleContainer.style.left = '50%';
+            subtitleContainer.style.transform = 'translate(-50%, -50%)';
+            subtitleContainer.style.zIndex = '1000';
+        }
+    }
+
     // 플레이어 준비 핸들러
     async function onPlayerReady() {
         try {
