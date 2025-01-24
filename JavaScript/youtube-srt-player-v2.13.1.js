@@ -335,6 +335,7 @@
         position: relative;
         width: 100%;
         background: #000;
+        padding-bottom: 56.25%; /* 16:9 비율 */
         z-index: 1;
     }
 
