@@ -448,19 +448,11 @@
     }
     
     #subtitle-text-ko {
-        position: absolute;
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        pointer-events: none;
-    }
+    }  
 
     #subtitle-text-ko span {
-        font-size: 26px;
+        font-size: 22px;
         color: #FFD700;
         text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         background: rgba(0, 0, 0, 0.2);
@@ -473,7 +465,7 @@
         line-height: 1.5;
         margin: 0 auto;
         position: relative;
-        top: 0px;
+        top: 65px;
     }
 
     .subtitle-area#en-subtitle-area {
