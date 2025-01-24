@@ -482,8 +482,7 @@
         word-break: keep-all;
         line-height: 1.5;
         margin: 0 auto;
-        position: relative;
-        top: 65px;
+        position: static;
     }
 
     .subtitle-area#en-subtitle-area {
