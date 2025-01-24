@@ -334,7 +334,8 @@
     .video-container {
         position: relative;
         width: 100%;
-        padding-bottom: 56.25%; /* 16:9 비율 */
+        background: #000;
+        z-index: 1;
     }
 
     .video-container.fixed {
@@ -350,11 +351,10 @@
     }
 
     .video-wrapper {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: visible;
     }
 
     .video-wrapper iframe {
@@ -367,7 +367,7 @@
     }
 
     .subtitle-area {
-        position: absolute;
+        position: relative;
         width: 100%;
         height: 40px;
         background: #000;
@@ -375,7 +375,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 100;
+        z-index: 10;
     }
 
     .subtitle-area > div {
@@ -413,25 +413,6 @@
         background: #000;
     }
 
-    #extra-subtitle-area {
-    top: 0;
-    }
-
-    #ko-subtitle-area {
-        top: 50%;
-        transform: translateY(-50%);
-    }
-
-    #en-subtitle-area {
-        bottom: 0;
-    }
-
-    .subtitle-content {
-        text-align: center;
-        margin: 0 auto;
-        max-width: 80%;
-    }
-        
     #subtitle-text-extra {
         width: 100%;
         position: relative;
