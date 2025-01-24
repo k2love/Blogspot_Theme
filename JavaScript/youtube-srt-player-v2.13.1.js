@@ -418,6 +418,19 @@
         background: #000;
     }
 
+    #extra-subtitle-area {
+    top: 0;
+    }
+
+    #ko-subtitle-area {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    #en-subtitle-area {
+        bottom: 0;
+    }
+
     #subtitle-text-extra {
         width: 100%;
         position: relative;
@@ -533,6 +546,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 80%;
     }  
     
     #subtitle-text-en .subtitle-content {
