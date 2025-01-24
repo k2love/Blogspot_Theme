@@ -368,7 +368,7 @@
     }
 
     .subtitle-area {
-        position: relative;
+        position: absolute;
         width: 100%;
         height: 40px;
         background: #000;
@@ -376,7 +376,8 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 10;
+        z-index: 100;
+        pointer-events: none;
     }
 
     .subtitle-area > div {
