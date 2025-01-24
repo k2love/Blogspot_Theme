@@ -368,7 +368,7 @@
     }
 
     .subtitle-area {
-        position: absolute;
+        position: relative;
         width: 100%;
         height: 40px;
         background: #000;
@@ -376,8 +376,7 @@
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 10;
-        pointer-events: none;
+        z-index: 100;
     }
 
     .subtitle-area > div {
@@ -387,6 +386,7 @@
         cursor: pointer;
         transition: opacity 0.2s ease;
     }
+
     .subtitle-area > div:hover,
     .subtitle-overlay > div:hover {
         opacity: 0.8;
