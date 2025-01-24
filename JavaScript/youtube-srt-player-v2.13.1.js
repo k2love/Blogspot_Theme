@@ -335,7 +335,6 @@
         position: relative;
         width: 100%;
         background: #000;
-        padding-bottom: 56.25%; /* 16:9 비율 */
         z-index: 1;
     }
 
@@ -354,11 +353,8 @@
     .video-wrapper {
         padding-bottom: 56.25%;
         overflow: visible;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        position: relative;
+        height: 0;
     }
 
     .video-wrapper iframe {
@@ -373,12 +369,6 @@
     .subtitle-area {
         position: absolute;
         width: 100%;
-        height: 40px;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
         z-index: 100;
         pointer-events: none;
     }
@@ -419,16 +409,20 @@
     }
 
     #extra-subtitle-area {
-    top: 0;
+        top: 10px;
     }
 
     #ko-subtitle-area {
-        top: 50%;
-        transform: translateY(-50%);
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
     }
 
     #en-subtitle-area {
-        bottom: 0;
+        bottom: 10px; /* 하단 여백 */
+        min-height: 40px;
     }
 
     #subtitle-text-extra {
@@ -466,8 +460,13 @@
     }
     
     #subtitle-text-ko {
+        position: relative;
         width: 100%;
-    }  
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     #subtitle-text-ko span {
         font-size: 22px;
@@ -477,12 +476,13 @@
         padding: 4px 8px;
         border-radius: 4px;
         display: inline-block;
-        max-width: 450px;
         white-space: normal;
         word-break: keep-all;
         line-height: 1.5;
         margin: 0 auto;
-        position: static;
+        position: relative;
+        transform: translateY(0);
+        max-width: 80%;
     }
 
     .subtitle-area#en-subtitle-area {
