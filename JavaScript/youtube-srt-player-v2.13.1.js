@@ -170,50 +170,6 @@
         });
     }
 
-    function getVideoIdFromUrl(url) {
-        try {
-            const urlParams = new URLSearchParams(new URL(url).search);
-            const siParam = urlParams.get('si');
-            if (!siParam) return null;
-            return siParam.split('_')[0];
-        } catch (error) {
-            console.error('URL 파싱 에러:', error);
-            return null;
-        }
-    }
-    
-    function onYouTubeIframeAPIReady() {
-        const iframe = document.getElementById('player');
-        const videoId = getVideoIdFromUrl(iframe.src);
-        
-        if (!videoId) {
-            console.error('비디오 ID를 찾을 수 없습니다.');
-            return;
-        }
-    
-        player = new YT.Player('player', {
-            height: '100%',
-            width: '100%',
-            videoId: videoId,
-            events: {
-                'onReady': onPlayerReady,
-                'onStateChange': onPlayerStateChange
-            }
-        });
-
-        const playerElement = document.getElementById('player');
-        playerElement.style.position = 'relative';
-        
-        const subtitleContainer = document.getElementById('subtitle-text-ko');
-        if (subtitleContainer) {
-            subtitleContainer.style.position = 'absolute';
-            subtitleContainer.style.top = '50%';
-            subtitleContainer.style.left = '50%';
-            subtitleContainer.style.transform = 'translate(-50%, -50%)';
-            subtitleContainer.style.zIndex = '1000';
-        }
-    }
-
     // 플레이어 준비 핸들러
     async function onPlayerReady() {
         try {
@@ -493,15 +449,14 @@
     
     #subtitle-text-ko {
         position: absolute;
-        top: 50%;           /* 상단에서 50% 위치로 */
-        left: 50%;          /* 좌측에서 50% 위치로 */
-        transform: translate(-50%, -50%); /* 요소 자체의 크기만큼 다시 이동하여 정중앙 배치 */
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         pointer-events: none;
-        z-index: 100;       /* 다른 요소들보다 위에 표시되도록 */
     }
 
     #subtitle-text-ko span {
